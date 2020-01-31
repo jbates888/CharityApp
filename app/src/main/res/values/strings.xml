@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">341_App</string>
+    <string name="loginText">Log In</string>
+    <string name="passwordHint">Password</string>
+    <string name="userNameHint">Email</string>
+    <string name="ToSignInTxt">Need an account?</string>
+    <string name="loginBtnTxt">Login</string>
+    <string name="guestBtnTxt">Continue as Guest</string>
+    <string name="regTxt">Sign Up</string>
+    <string name="ToLoginTxt">Already have an Account?</string>
+    <string name="SignUpTxt">Sign Up</string>
+    <string name="profileTxt">Set your Profile Name</string>
+    <string name="saveBtnTxt">Save</string>
+
+    <string-array name="country_arrays">
+        <item>Admin</item>
+        <item>Donner</item>
+        <item>Guest</item>
+    </string-array>
+</resources>
+
