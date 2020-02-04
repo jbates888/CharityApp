@@ -11,6 +11,7 @@
     <string name="SignUpTxt">Sign Up</string>
     <string name="profileTxt">Set your Profile Name</string>
     <string name="saveBtnTxt">Save</string>
+    <string name="logoutTxt">Logout</string>
 
     <string-array name="country_arrays">
         <item>Admin</item>

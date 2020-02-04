@@ -2,9 +2,12 @@ package com.example.charityapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText emailTxt;
     EditText passTxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
