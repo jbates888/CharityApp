@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
         findViewById(R.id.loginBtn).setOnClickListener(this);
+        findViewById(R.id.guest_btn).setOnClickListener(this);
     }
 
     @Override
@@ -50,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.loginBtn:
                 login();
+                break;
+            case R.id.guest_btn:
+                finish();
+                Intent toGuestIntent = new Intent(this, GuestHomeActivty.class);
+                startActivity(toGuestIntent);
                 break;
         }
     }
