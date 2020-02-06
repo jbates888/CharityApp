@@ -2,12 +2,9 @@ package com.example.charityapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText emailTxt;
     EditText passTxt;
-
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         emailTxt = findViewById(R.id.loginUserNameTxt);
         passTxt = findViewById(R.id.loginPassTxt);
+        progressBar = findViewById(R.id.loginProgBar);
+
 
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
         findViewById(R.id.loginBtn).setOnClickListener(this);
@@ -83,9 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     finish();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);

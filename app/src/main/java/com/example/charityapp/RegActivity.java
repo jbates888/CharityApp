@@ -20,7 +20,7 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
 
     EditText emailTxt;
     EditText passTxt;
-    ProgressBar progBar;
+    ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
 
@@ -35,7 +35,7 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
         emailTxt = findViewById(R.id.email_txt);
         passTxt = findViewById(R.id.pass_txt);
 
-        progBar = findViewById(R.id.regProgBar);
+        progressBar = findViewById(R.id.regProgBar);
 
         findViewById(R.id.signup_btn).setOnClickListener(this);
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
@@ -71,12 +71,12 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-        progBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     finish();
                     startActivity(new Intent(RegActivity.this, ProfileActivity.class));
