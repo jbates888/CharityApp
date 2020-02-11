@@ -14,6 +14,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
+    Bundle bundle;
+    String username;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +25,10 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
+
+        bundle = getIntent().getExtras();
+       // username = bundle.getString("username");
+
     }
 
     @Override

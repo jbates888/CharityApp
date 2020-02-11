@@ -6,11 +6,15 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,9 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class ProfileActivity extends AppCompatActivity {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText userNameTxt;
+    Spinner spinner;
+
+    String type = "";
 
     FirebaseAuth mAuth;
 
@@ -36,13 +46,26 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         userNameTxt = findViewById(R.id.userName_txt);
+        spinner = findViewById(R.id.userdrop);
+
+        spinner.setOnItemSelectedListener(this);
+
+        ArrayList<String> types = new ArrayList<>();
+        types.add("Admin");
+        types.add("Donor");
+        types.add("Volunteer");
+        types.add("Other");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(dataAdapter);
 
         loadInfo();
 
         findViewById(R.id.saveBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = userNameTxt.getText().toString();
+                final String userName = userNameTxt.getText().toString();
                 if(userName.isEmpty()){
                     userNameTxt.setError("Must enter user name");
                     userNameTxt.requestFocus();
@@ -53,15 +76,17 @@ public class ProfileActivity extends AppCompatActivity {
 
                 if(user != null){
                     UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(userName)
+                            .setDisplayName(type + ": " + userName)
                             .build();
 
                     user.updateProfile(profile)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getApplicationContext(), "User infromation Updated", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+                                    Toast.makeText(getApplicationContext(), "User information Updated for " + type + ": " + userName, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                                    intent.putExtra("username", type);
+                                    startActivity(intent);
                                 }
                             });
                 }
@@ -107,5 +132,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
         return true;
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        type = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + type, Toast.LENGTH_LONG).show();
+
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
     }
 }
