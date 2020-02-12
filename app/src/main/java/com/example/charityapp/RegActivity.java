@@ -29,7 +29,6 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         emailTxt = findViewById(R.id.email_txt);
