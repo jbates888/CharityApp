@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,12 +71,15 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.ActionLogout:
+                Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_LONG).show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
-
+                return true;
             case R.id.ActionCreate:
+                finish();
                 startActivity(new Intent(this, MakeEventActivity.class));
+                return true;
         }
         return true;
     }
