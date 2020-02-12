@@ -13,27 +13,19 @@
     <string name="saveBtnTxt">Save</string>
     <string name="logoutTxt">Logout</string>
 
+    <string name="createTxt">Create an Event</string>
+    <string name="nameTxt">Event Name</string>
+    <string name="programTxt">Event Program</string>
+    <string name="dateTxt">Date</string>
+    <string name="timeTxt">0:00 - 0:00PM</string>
+    <string name="descriptionTxt">Description</string>
+    <string name="createBtnTxt">Create</string>
+
     <string-array name="country_arrays">
         <item>Admin</item>
         <item>Donor</item>
         <item>Volunteer</item>
     </string-array>
-
-    <string-array name="languages">
-        <item>C</item>
-        <item>C++</item>
-        <item>JAVA</item>
-        <item>Python</item>
-    </string-array>
-
-    <string-array name="description">
-        <item>description</item>
-        <item>description</item>
-        <item>description</item>
-        <item>description</item>
-
-    </string-array>
-
 
 </resources>
 

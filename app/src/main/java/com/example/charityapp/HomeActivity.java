@@ -74,51 +74,9 @@ public class HomeActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
 
+            case R.id.ActionCreate:
+                startActivity(new Intent(this, MakeEventActivity.class));
         }
         return true;
     }
 }
-
-//public class HomeActivity extends AppCompatActivity {
-//
-//    RecyclerView recyclerView;
-//    String s1[], s2[];
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_home);
-//
-//        Toolbar toolbar = findViewById(R.id.appbar);
-//        setSupportActionBar(toolbar);
-//
-//        recyclerView = findViewById(R.id.recycler_view);
-//
-//        s1 = getResources().getStringArray(R.array.languages);
-//        s2 = getResources().getStringArray(R.array.description);
-//
-//        recycleAdapter recycleAdapter = new recycleAdapter(this, s1, s2);
-//        recyclerView.setAdapter(recycleAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.ActionLogout:
-//                FirebaseAuth.getInstance().signOut();
-//                finish();
-//                startActivity(new Intent(this, MainActivity.class));
-//
-//        }
-//        return true;
-//    }
-//}
-//
