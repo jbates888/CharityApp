@@ -22,7 +22,6 @@ public class GuestHomeActivty extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-
     }
 
     @Override
