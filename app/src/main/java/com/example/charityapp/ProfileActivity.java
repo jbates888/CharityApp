@@ -27,7 +27,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    //
     EditText userNameTxt;
     Spinner spinner;
 
