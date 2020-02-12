@@ -20,6 +20,7 @@
     <string name="timeTxt">0:00 - 0:00PM</string>
     <string name="descriptionTxt">Description</string>
     <string name="createBtnTxt">Create</string>
+    <string name="cancelBtnTxt">Cancel</string>
 
     <string-array name="country_arrays">
         <item>Admin</item>

@@ -23,6 +23,7 @@ public class MakeEventActivity extends AppCompatActivity {
     EditText Name, Program, Description, Date, Time;
     int maxId = 0;
     Button btn;
+    Button cancelBtn;
 
     Event event;
 
@@ -37,6 +38,7 @@ public class MakeEventActivity extends AppCompatActivity {
         Date = findViewById(R.id.date_edit);
         Time = findViewById(R.id.time_edit);
         btn = findViewById(R.id.create_btn);
+        cancelBtn = findViewById(R.id.cancel_btn);
 
         event = new Event();
 
@@ -75,6 +77,15 @@ public class MakeEventActivity extends AppCompatActivity {
                 Intent intent = new Intent(MakeEventActivity.this, HomeActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(MakeEventActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
     }
