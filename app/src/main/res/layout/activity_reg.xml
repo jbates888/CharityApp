@@ -64,25 +64,16 @@
         android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/SignUpTxt"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/sendToLogin_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropDown" />
-
-    <Spinner
-        android:id="@+id/dropDown"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:entries="@array/country_arrays"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/pass_txt"
+        app:layout_constraintVertical_bias="0.142" />
 
     <ProgressBar
         android:id="@+id/regProgBar"
