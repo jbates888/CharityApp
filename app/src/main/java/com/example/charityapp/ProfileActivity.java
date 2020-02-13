@@ -28,7 +28,6 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    //
     EditText userNameTxt;
     Spinner spinner;
 
@@ -55,7 +54,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         types.add("Admin");
         types.add("Donor");
         types.add("Volunteer");
-        //types.add("Other");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -96,10 +94,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
                                         startActivity(intent);
                                     }
-
-//                                    Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
-//                                    //intent.putExtra("username", type);
-//                                    startActivity(intent);
                                 }
                             });
                 }
@@ -148,10 +142,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
+        //get the selected item from the dropdown menu
         type = parent.getItemAtPosition(position).toString();
 
-        // Showing selected spinner item
+        //show which item was selected
         Toast.makeText(parent.getContext(), "Selected: " + type, Toast.LENGTH_LONG).show();
 
     }
