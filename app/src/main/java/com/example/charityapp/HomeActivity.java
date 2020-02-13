@@ -19,9 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
-
 public class HomeActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -36,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
-
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -44,7 +40,6 @@ public class HomeActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Events");
-
     }
 
     @Override

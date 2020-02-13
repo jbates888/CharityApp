@@ -1,3 +1,5 @@
+//Activity to create a new event
+
 package com.example.charityapp;
 
 import androidx.annotation.NonNull;
