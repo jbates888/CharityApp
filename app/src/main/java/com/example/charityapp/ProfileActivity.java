@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,11 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    //
     EditText userNameTxt;
     Spinner spinner;
+
     String type = "";
 
     FirebaseAuth mAuth;
@@ -108,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 userNameTxt.setText(userName);
             }
         }
+
     }
 
     @Override
@@ -139,6 +144,5 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
-
     }
 }
