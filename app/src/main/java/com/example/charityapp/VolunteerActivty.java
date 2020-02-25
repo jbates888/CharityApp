@@ -28,7 +28,7 @@ public class VolunteerActivty extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest_home_activty);
+        setContentView(R.layout.activity_volunteer_activty);
 
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
