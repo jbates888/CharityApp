@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.lang.reflect.Array;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -54,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         types.add("Admin");
         types.add("Donor");
         types.add("Volunteer");
-        types.add("Other");
+        //types.add("Other");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -84,9 +85,21 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getApplicationContext(), "User information Updated for " + type + ": " + userName, Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
-                                    intent.putExtra("username", type);
-                                    startActivity(intent);
+                                    Intent intent;
+                                    if(type.equals("Admin")){
+                                        intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                    } else if (type.equals("Donor")){
+                                        intent = new Intent(ProfileActivity.this, DonorActivity.class);
+                                        startActivity(intent);
+                                    } else if (type.equals("Volunteer")){
+                                        intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
+                                        startActivity(intent);
+                                    }
+
+//                                    Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+//                                    //intent.putExtra("username", type);
+//                                    startActivity(intent);
                                 }
                             });
                 }
