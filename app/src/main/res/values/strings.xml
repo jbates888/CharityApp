@@ -22,6 +22,11 @@
     <string name="createBtnTxt">Create</string>
     <string name="cancelBtnTxt">Cancel</string>
 
+    <string name="deleteTxt">Delete Event</string>
+    <string name="donateAmountTxt">Enter donation amount</string>
+    <string name="donateTxt">Donate</string>
+    <string name="volunteerTxt">Volunteer</string>
+
     <string-array name="country_arrays">
         <item>Admin</item>
         <item>Donor</item>

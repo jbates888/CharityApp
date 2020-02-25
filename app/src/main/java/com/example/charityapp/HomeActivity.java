@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -19,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
 
     RecyclerView recyclerView;
     DatabaseReference ref;
@@ -50,6 +51,23 @@ public class HomeActivity extends AppCompatActivity {
                 new FirebaseRecyclerAdapter<Event, recycleAdapter>(Event.class, R.layout.row, recycleAdapter.class, ref){
                     protected void populateViewHolder(recycleAdapter holder, Event event, int i){
                         holder.setView(getApplicationContext(), event.getName(), event.getProgram(), event.getDate(), event.getTime());
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(HomeActivity.this, AdminEventDetails.class);
+                                intent.putExtra("Name", event.getName());
+                                intent.putExtra("Program", event.getProgram());
+                                intent.putExtra("Description", event.getDescription());
+                                intent.putExtra("Date", event.getDate());
+                                intent.putExtra("Time", event.getTime());
+                                intent.putExtra("Funds", event.getFunding());
+                                intent.putExtra("Volunteers", event.getVolunteers());
+
+
+                                startActivity(intent);
+                            }
+                        });
                     }
                 };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -78,4 +96,5 @@ public class HomeActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

@@ -1,9 +1,11 @@
 package com.example.charityapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class recycleAdapter extends RecyclerView.ViewHolder{
@@ -27,4 +29,7 @@ public class recycleAdapter extends RecyclerView.ViewHolder{
         timeTxt.setText(time);
 
     }
+
+
+
 }

@@ -11,7 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakeEventActivity"></activity>
+        <activity android:name=".GuestEventDetails"></activity>
+        <activity android:name=".VolunteerEventDetails" />
+        <activity android:name=".DonorEventDetails" />
+        <activity
+            android:name=".AdminEventDetails"
+            android:label="Details"
+            android:parentActivityName=".HomeActivity" />
+        <activity android:name=".MakeEventActivity" />
         <activity android:name=".DonorActivity" />
         <activity android:name=".VolunteerActivty" />
         <activity android:name=".GuestHomeActivty" />
