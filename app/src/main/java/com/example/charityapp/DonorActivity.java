@@ -57,7 +57,7 @@ public class DonorActivity extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(DonorActivity.this, AdminEventDetails.class);
+                                Intent intent = new Intent(DonorActivity.this, DonorEventDetails.class);
                                 intent.putExtra("Name", event.getName());
                                 intent.putExtra("Program", event.getProgram());
                                 intent.putExtra("Description", event.getDescription());
@@ -65,6 +65,7 @@ public class DonorActivity extends AppCompatActivity {
                                 intent.putExtra("Time", event.getTime());
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
+                                intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
 
                                 startActivity(intent);
                             }

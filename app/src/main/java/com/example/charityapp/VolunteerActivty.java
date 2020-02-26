@@ -64,6 +64,7 @@ public class VolunteerActivty extends AppCompatActivity {
                                 intent.putExtra("Time", event.getTime());
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
+                                intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
 
                                 startActivity(intent);
                             }

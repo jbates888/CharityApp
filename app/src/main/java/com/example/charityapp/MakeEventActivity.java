@@ -22,7 +22,7 @@ public class MakeEventActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebasedatabase;
     DatabaseReference mRefrence;
-    EditText Name, Program, Description, Date, Time;
+    EditText Name, Program, Description, Date, Time, VolsNeeded;
     int maxId = 0;
     Button btn;
     Button cancelBtn;
@@ -39,6 +39,7 @@ public class MakeEventActivity extends AppCompatActivity {
         Description = findViewById(R.id.description_edit);
         Date = findViewById(R.id.date_edit);
         Time = findViewById(R.id.time_edit);
+        VolsNeeded = findViewById(R.id.volsNeeded_edit);
         btn = findViewById(R.id.create_btn);
         cancelBtn = findViewById(R.id.cancel_btn);
 
@@ -70,6 +71,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 event.setTime(Time.getText().toString());
                 event.setFunding("$0");
                 event.setVolunteers("");
+                event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
 
                 mRefrence.child(String.valueOf(maxId+1)).setValue(event);
 

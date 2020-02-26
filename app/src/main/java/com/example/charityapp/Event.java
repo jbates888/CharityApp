@@ -1,5 +1,7 @@
 package com.example.charityapp;
 
+import android.widget.Toast;
+
 public class Event {
     private String Name;
     private String Program;
@@ -8,12 +10,13 @@ public class Event {
     private String Funding;
     private String Description;
     private String Volunteers;
+    private int VolunteersNeeded;
 
     public Event() {
 
     }
 
-    public Event(String Name, String Program, String Date, String Time,String Funding, String Description, String Volunteers) {
+    public Event(String Name, String Program, String Date, String Time,String Funding, String Description, String Volunteers, int VolunteersNeeded) {
         this.Name = Name;
         this.Program = Program;
         this.Date = Date;
@@ -21,6 +24,7 @@ public class Event {
         this.Funding = Funding;
         this.Description = Description;
         this.Volunteers = Volunteers;
+        this.VolunteersNeeded = VolunteersNeeded;
     }
 
     public String getName() {
@@ -77,5 +81,13 @@ public class Event {
 
     public void setVolunteers(String Volunteers) {
         this.Volunteers = Volunteers;
+    }
+
+    public int getVolunteersNeeded() {
+        return VolunteersNeeded;
+    }
+
+    public void setVolunteersNeeded(int VolunteersNeeded) {
+        this.VolunteersNeeded = VolunteersNeeded;
     }
 }
