@@ -5,9 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Fire base authentication object
     FirebaseAuth mAuth;
+    Button passhide;
     //Text field objects and progress bar
     EditText emailTxt;
     EditText passTxt;
@@ -37,11 +44,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         passTxt = findViewById(R.id.loginPassTxt);
         //instantiating the progress bar
         progressBar = findViewById(R.id.loginProgBar);
+        passhide = findViewById(R.id.showpass);
 
         //setting an on click listener to every button on the screen
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
         findViewById(R.id.loginBtn).setOnClickListener(this);
         findViewById(R.id.guest_btn).setOnClickListener(this);
+        passhide.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if(passhide.getText().toString().equalsIgnoreCase("Show")){
+                    passTxt.setTransformationMethod(null);
+                    passhide.setText("Hide");
+                } else {
+                    passTxt.setTransformationMethod(new PasswordTransformationMethod());
+                    passhide.setText("Show");
+                }
+            }
+        });
+
+        passTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)){
+                    login();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -71,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent toGuestIntent = new Intent(this, GuestHomeActivty.class);
                 startActivity(toGuestIntent);
                 break;
+
         }
+
     }
 
     /**

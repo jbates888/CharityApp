@@ -12,6 +12,8 @@
     <string name="profileTxt">Set your Profile Name</string>
     <string name="saveBtnTxt">Save</string>
     <string name="logoutTxt">Logout</string>
+    <string name="showtxt">Show</string>
+    <string name="hidetxt">Hide</string>
 
     <string name="createTxt">Create an Event</string>
     <string name="nameTxt">Event Name</string>
