@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/red_divide_icon"
         android:label="Charity App"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/red_divide_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".GuestEventDetails"></activity>
@@ -25,7 +25,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
