@@ -63,21 +63,13 @@ public class HomeActivity extends AppCompatActivity  {
                                 intent.putExtra("Time", event.getTime());
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
+                                intent.putExtra("index", holder.getAdapterPosition());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
-
-
                                 startActivity(intent);
 
                             }
                         });
 
-//                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                            @Override
-//                            public boolean onLongClick(View v) {
-//                                Toast.makeText(getApplicationContext(), "here", Toast.LENGTH_LONG).show();
-//                                return false;
-//                            }
-//                        });
                     }
                 };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
