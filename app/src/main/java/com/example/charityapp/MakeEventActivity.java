@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MakeEventActivity extends AppCompatActivity {
@@ -45,21 +46,42 @@ public class MakeEventActivity extends AppCompatActivity {
 
         event = new Event();
 
-        mRefrence = mFirebasedatabase.getInstance().getReference().child("Events");
+        mRefrence = FirebaseDatabase.getInstance().getReference("Events");
 
-        mRefrence.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    maxId = (int) dataSnapshot.getChildrenCount();
-                }
-            }
+//        Query q = mRefrence.orderByKey().limitToLast(1);
+//        q.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()) {
+//                    if (dataSnapshot.getChildrenCount() == 0) {
+//                        maxId = 0;
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
+//                        maxId = Integer.parseInt(dataSnapshot.getKey());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        mRefrence.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    maxId = (int) dataSnapshot.getChildrenCount();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +95,8 @@ public class MakeEventActivity extends AppCompatActivity {
                 event.setVolunteers("");
                 event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
 
-                mRefrence.child(String.valueOf(maxId+1)).setValue(event);
+                mRefrence.child(event.getName()).setValue(event);
+
 
                 Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
 

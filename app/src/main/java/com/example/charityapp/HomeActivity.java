@@ -92,7 +92,9 @@ public class HomeActivity extends AppCompatActivity  {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                   // Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
                                                     eventshot.getRef().removeValue();
+
                                                 }
                                             }
 

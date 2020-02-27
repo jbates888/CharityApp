@@ -20,8 +20,12 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 
@@ -100,8 +104,28 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        ref.child(Integer.toString(holder.getAdapterPosition() + 1)).child("volunteers").setValue(user.getDisplayName());
-                                        ref.child(Integer.toString(holder.getAdapterPosition() + 1)).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
+
+                                        String eventname = event.getName();
+                                        Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                                        eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                    //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+
+                                                    String temp = user.getDisplayName().replaceAll("Volunteer:", "");
+
+                                                    ref.child(eventshot.getKey()).child("volunteers").setValue(temp + ", ");
+                                                    ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
                                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
                                     }
                                 });
