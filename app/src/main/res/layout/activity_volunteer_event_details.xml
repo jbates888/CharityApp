@@ -90,19 +90,4 @@
         app:layout_constraintTop_toBottomOf="@+id/event_details_vols" />
 
 
-    <Button
-        android:id="@+id/volunteer_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/cardview_light_background"
-        android:text="@string/volunteerTxt"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

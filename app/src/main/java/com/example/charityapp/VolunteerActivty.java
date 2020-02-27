@@ -20,7 +20,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class VolunteerActivty extends AppCompatActivity {
+import java.io.Serializable;
+
+
+@SuppressWarnings("serial")
+public class VolunteerActivty extends AppCompatActivity implements Serializable {
 
     RecyclerView recyclerView;
     DatabaseReference ref;

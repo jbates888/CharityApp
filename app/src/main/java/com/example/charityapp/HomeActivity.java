@@ -2,11 +2,13 @@ package com.example.charityapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,8 +19,12 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity  {
 
@@ -40,7 +46,7 @@ public class HomeActivity extends AppCompatActivity  {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("Events");
+        ref = FirebaseDatabase.getInstance().getReference("Events");
     }
 
     @Override
@@ -68,6 +74,51 @@ public class HomeActivity extends AppCompatActivity  {
 
                                 startActivity(intent);
 
+                            }
+                        });
+
+                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+                            public boolean onLongClick(View v){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("Admin Options");
+
+                                builder.setNegativeButton("Delete Event", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String eventname = event.getName();
+                                        Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                                        eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                    eventshot.getRef().removeValue();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                });
+
+                                builder.setPositiveButton("Modify Event", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
+                                return true;
                             }
                         });
 
