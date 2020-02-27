@@ -115,7 +115,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
 
                                                     String temp = user.getDisplayName().replaceAll("Volunteer:", "");
 
-                                                    ref.child(eventshot.getKey()).child("volunteers").setValue(temp + ", ");
+                                                    ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp + ", ");
                                                     ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
                                                 }
                                             }
