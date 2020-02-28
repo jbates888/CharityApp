@@ -88,49 +88,81 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View v) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
-                                builder.setCancelable(true);
-                                builder.setTitle("Volunteer for event");
-                                builder.setMessage("Would you like to sign up for this event?");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String temp = user.getDisplayName().replaceAll("Volunteer:", "");
 
-                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
+                                //check if the max amount of volunteers has been reached
+                                if(event.getVolunteersNeeded()<= 0){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Volunteer Limit Reached");
+                                    builder.setMessage("The maximum amount of volunteers needed for the event has been reached!");
 
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
+                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                                //check if that users name is already signed up
+                                else if(event.getVolunteers().contains(temp)) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Already Signed up");
+                                    builder.setMessage("You are already signed up for this event");
 
-                                        String eventname = event.getName();
-                                        Query eventquery = ref.orderByChild("name").equalTo(eventname);
-                                        eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for(DataSnapshot eventshot: dataSnapshot.getChildren()){
-                                                    //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.show();
+                                    //if they are not signed up, ask if they would like to
+                                }else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Volunteer for event");
+                                    builder.setMessage("Would you like to sign up for this event?");
 
-                                                    String temp = user.getDisplayName().replaceAll("Volunteer:", "");
+                                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
 
-                                                    ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp + ", ");
-                                                    ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String eventname = event.getName();
+                                            Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                                            eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                        //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+                                                        ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp + ", ");
+                                                        ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
+                                                    }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                            }
-                                        });
+                                                }
+                                            });
 
-                                        Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                                builder.show();
+                                            Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    builder.show();
+
+                                }
                                 return true;
+
                             }
                         });
 
