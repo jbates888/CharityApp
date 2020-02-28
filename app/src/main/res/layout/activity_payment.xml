@@ -32,22 +32,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.824" />
 
-    <EditText
-        android:id="@+id/apartment"
-        android:layout_width="140dp"
-        android:layout_height="37dp"
-        android:ems="10"
-        android:hint="@string/appartment"
-        android:inputType="textPersonName"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.832"
-        android:autofillHints="" />
-
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
@@ -293,5 +277,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.89" />
+
+    <EditText
+        android:id="@+id/apartment"
+        android:layout_width="140dp"
+        android:layout_height="37dp"
+        android:ems="10"
+        android:hint="@string/apartment"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.832"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
