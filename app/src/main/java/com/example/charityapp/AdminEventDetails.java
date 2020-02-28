@@ -1,5 +1,6 @@
 package com.example.charityapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,8 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class AdminEventDetails extends AppCompatActivity {
 
@@ -28,13 +33,14 @@ public class AdminEventDetails extends AppCompatActivity {
 
     Button deleteBtn;
 
-    String index;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_event_details);
 
+        ref = FirebaseDatabase.getInstance().getReference("Events");
 
         nameTxt = findViewById(R.id.event_details_title);
         progTxt = findViewById(R.id.event_details_prog);
@@ -47,7 +53,6 @@ public class AdminEventDetails extends AppCompatActivity {
 
         deleteBtn = findViewById(R.id.delete_btn);
 
-
         Bundle extras = getIntent().getExtras();
         nameTxt.setText( extras.getString("Name"));
         progTxt.setText("Program: "  + extras.getString("Program"));
@@ -58,21 +63,29 @@ public class AdminEventDetails extends AppCompatActivity {
         volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
 
-//        index = Integer.toString(extras.getInt("index") + 1);
-//
-//        Toast.makeText(getApplicationContext(), index, Toast.LENGTH_LONG).show();
-//
-//        mRefrence = mFirebasedatabase.getInstance().getReference().child("Events");
-//
-//        deleteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mRefrence.child(index).removeValue();
-//
-//                Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_LONG).show();
-//                finish();
-//                startActivity(new Intent(AdminEventDetails.this, HomeActivity.class));
-//            }
-//        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String eventname = extras.getString("Name");
+                Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                            // Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+                            eventshot.getRef().removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                startActivity(new Intent(AdminEventDetails.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 }
