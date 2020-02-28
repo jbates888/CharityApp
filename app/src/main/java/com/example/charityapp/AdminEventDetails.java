@@ -67,6 +67,7 @@ public class AdminEventDetails extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String eventname = extras.getString("Name");
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
                 eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
