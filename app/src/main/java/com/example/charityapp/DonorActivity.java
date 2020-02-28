@@ -2,11 +2,13 @@ package com.example.charityapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,14 +20,21 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class DonorActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference ref;
     FirebaseDatabase database;
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +51,8 @@ public class DonorActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Events");
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -70,6 +81,88 @@ public class DonorActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
+
+                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String temp = user.getDisplayName().replaceAll("Donor:", "");
+
+                                //check if the max amount of volunteers has been reached
+                                if(event.getVolunteersNeeded()<= 0){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(DonorActivity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Volunteer Limit Reached");
+                                    builder.setMessage("The maximum amount of volunteers needed for the event has been reached!");
+
+                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                                //check if that users name is already signed up
+                                else if(event.getVolunteers().contains(temp)) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(DonorActivity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Already Signed up");
+                                    builder.setMessage("You are already signed up for this event");
+
+                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.show();
+                                    //if they are not signed up, ask if they would like to
+                                }else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(DonorActivity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Volunteer for event");
+                                    builder.setMessage("Would you like to sign up for this event?");
+
+                                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String eventname = event.getName();
+                                            Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                                            eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                        //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+                                                        ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp + ", ");
+                                                        ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    builder.show();
+
+                                }
+                                return true;
+
+                            }
+                        });
+
                     }
                 };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
