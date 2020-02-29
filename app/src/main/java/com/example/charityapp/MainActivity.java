@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
         findViewById(R.id.loginBtn).setOnClickListener(this);
         findViewById(R.id.guest_btn).setOnClickListener(this);
+        /**
         passhide.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 if(passhide.getText().toString().equalsIgnoreCase("Show")){
@@ -61,6 +63,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        **/
+
+        // Will set the ontouchListener() method to the passhide button to determine if it is being held or not
+        passhide.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Call the method getAction to determine if the button is up or down
+                switch (event.getAction()) {
+                    // When the button is held show the password and display "hide"
+                    case MotionEvent.ACTION_DOWN: {
+                        passTxt.setTransformationMethod(null);
+                        passhide.setText("Hide");
+                        break;
+                    }
+                    // When the button is not pressed hide the password and display "show"
+                    case MotionEvent.ACTION_UP: {
+                        passTxt.setTransformationMethod(new PasswordTransformationMethod());
+                        passhide.setText("Show");
+                    }
+                }
+                return true;
+            }
+        });
+
 
         passTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
