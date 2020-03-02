@@ -87,4 +87,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/showpass"
+        android:layout_width="57dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="32dp"
+        android:background="#E53935"
+        android:text="@string/showtxt"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pass_txt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
