@@ -91,12 +91,11 @@ public class MakeEventActivity extends AppCompatActivity {
                 event.setDescription(Description.getText().toString());
                 event.setDate(Date.getText().toString());
                 event.setTime(Time.getText().toString());
-                event.setFunding("$0");
+                event.setFunding(0);
                 event.setVolunteers("");
                 event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
 
                 mRefrence.child(event.getName()).setValue(event);
-
 
                 Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
 
@@ -104,6 +103,10 @@ public class MakeEventActivity extends AppCompatActivity {
                 Intent intent = new Intent(MakeEventActivity.this, HomeActivity.class);
                 startActivity(intent);
 
+
+//                if(Name.getText().toString() != "" && Program.getText().toString() != "" && Description.getText().toString() != "" && Date.getText().toString() != "" && Time.getText().toString() != ""){
+//
+//                }
             }
         });
 

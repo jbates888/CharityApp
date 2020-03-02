@@ -32,8 +32,10 @@ public class DonorEventDetails extends AppCompatActivity {
     TextView volsTxt;
     TextView volsNeededTxt;
     Button volunteerBtn;
+    Button donateBtn;
     DatabaseReference ref;
     FirebaseAuth mAuth;
+    TextView donateAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,8 @@ public class DonorEventDetails extends AppCompatActivity {
         volsTxt = findViewById(R.id.event_details_vols);
         volsNeededTxt = findViewById(R.id.event_details_volsNeeded);
         volunteerBtn = findViewById(R.id.volunteer_btn);
+        donateBtn = findViewById(R.id.donate_btn);
+        donateAmount = findViewById(R.id.donateEditTxt);
 
 
         Bundle extras = getIntent().getExtras();
@@ -57,12 +61,38 @@ public class DonorEventDetails extends AppCompatActivity {
         descTxt.setText("Description: "  +  extras.getString("Description"));
         dateTxt.setText("Date: "  +  extras.getString("Date"));
         timeTxt.setText("Time: "  +  extras.getString("Time"));
-        fundsTxt.setText("Funding: "  +  extras.getString("Funds"));
+        fundsTxt.setText("Funding: $"  +  extras.getInt("Funds"));
         volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
 
         ref = FirebaseDatabase.getInstance().getReference("Events");
         mAuth = FirebaseAuth.getInstance();
+
+        donateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int amount = Integer.parseInt(donateAmount.getText().toString());
+
+                String eventname = extras.getString("Name");
+                Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                            ref.child(eventshot.getKey()).child("funding").setValue(extras.getInt("Funds") + amount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                finish();
+                startActivity(new Intent(DonorEventDetails.this, DonorActivity.class));
+                Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
+            }
+        });
 
         volunteerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

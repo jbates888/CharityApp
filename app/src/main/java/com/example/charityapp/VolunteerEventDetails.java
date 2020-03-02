@@ -58,7 +58,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
         descTxt.setText("Description: "  +  extras.getString("Description"));
         dateTxt.setText("Date: "  +  extras.getString("Date"));
         timeTxt.setText("Time: "  +  extras.getString("Time"));
-        fundsTxt.setText("Funding: "  +  extras.getString("Funds"));
+        fundsTxt.setText("Funding: $"  +  extras.getInt("Funds", 0));
         volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
 
