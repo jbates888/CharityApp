@@ -7,7 +7,7 @@ public class Event {
     private String Program;
     private String Date;
     private String Time;
-    private String Funding;
+    private int Funding;
     private String Description;
     private String Volunteers;
     private int VolunteersNeeded;
@@ -16,7 +16,7 @@ public class Event {
 
     }
 
-    public Event(String Name, String Program, String Date, String Time,String Funding, String Description, String Volunteers, int VolunteersNeeded) {
+    public Event(String Name, String Program, String Date, String Time, int Funding, String Description, String Volunteers, int VolunteersNeeded) {
         this.Name = Name;
         this.Program = Program;
         this.Date = Date;
@@ -59,11 +59,11 @@ public class Event {
         this.Time = Time;
     }
 
-    public String getFunding() {
+    public int getFunding() {
         return Funding;
     }
 
-    public void setFunding(String Funding) {
+    public void setFunding(int Funding) {
         this.Funding = Funding;
     }
 

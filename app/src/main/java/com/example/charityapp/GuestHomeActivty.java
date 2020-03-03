@@ -65,7 +65,6 @@ public class GuestHomeActivty extends AppCompatActivity {
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
 
-
                                 startActivity(intent);
                             }
                         });

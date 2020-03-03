@@ -126,7 +126,7 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="@string/donateAmountTxt"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/donate_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"

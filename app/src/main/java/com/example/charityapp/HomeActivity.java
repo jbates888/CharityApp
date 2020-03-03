@@ -71,7 +71,6 @@ public class HomeActivity extends AppCompatActivity  {
                                 intent.putExtra("Volunteers", event.getVolunteers());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
 
-
                                 startActivity(intent);
 
                             }
@@ -92,12 +91,10 @@ public class HomeActivity extends AppCompatActivity  {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for(DataSnapshot eventshot: dataSnapshot.getChildren()){
-                                                   // Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
                                                     eventshot.getRef().removeValue();
 
                                                 }
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -123,14 +120,6 @@ public class HomeActivity extends AppCompatActivity  {
                                 return true;
                             }
                         });
-
-//                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                            @Override
-//                            public boolean onLongClick(View v) {
-//                                Toast.makeText(getApplicationContext(), "here", Toast.LENGTH_LONG).show();
-//                                return false;
-//                            }
-//                        });
                     }
                 };
         recyclerView.setAdapter(firebaseRecyclerAdapter);

@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -26,6 +28,7 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
     EditText passTxt;
     Button signup;
     Button login;
+    Button passhide;
     ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
@@ -42,9 +45,31 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
         signup = findViewById(R.id.signup_btn);
         login = findViewById(R.id.sendToLogin_btn);
         progressBar = findViewById(R.id.regProgBar);
+        passhide = findViewById(R.id.showpass);
 
         signup.setOnClickListener(this);
         login.setOnClickListener(this);
+
+        passhide.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Call the method getAction to determine if the button is up or down
+                switch (event.getAction()) {
+                    // When the button is held show the password and display "hide"
+                    case MotionEvent.ACTION_DOWN: {
+                        passTxt.setTransformationMethod(null);
+                        passhide.setText("Hide");
+                        break;
+                    }
+                    // When the button is not pressed hide the password and display "show"
+                    case MotionEvent.ACTION_UP: {
+                        passTxt.setTransformationMethod(new PasswordTransformationMethod());
+                        passhide.setText("Show");
+                    }
+                }
+                return true;
+            }
+        });
 
         passTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -55,6 +80,8 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
                 return false;
             }
         });
+
+
 
     }
 
