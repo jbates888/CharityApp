@@ -138,6 +138,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
                                         }
                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") - 1);
+                                        ref.child(eventshot.getKey()).child("VOLS").child("volunteer").setValue(temp);
                                     }
                                 }
 
