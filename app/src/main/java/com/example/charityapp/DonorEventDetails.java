@@ -36,6 +36,7 @@ public class DonorEventDetails extends AppCompatActivity {
     DatabaseReference ref;
     FirebaseAuth mAuth;
     TextView donateAmount;
+    int amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +72,13 @@ public class DonorEventDetails extends AppCompatActivity {
         donateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int amount = Integer.parseInt(donateAmount.getText().toString());
 
+                if(isValid(donateAmount.getText().toString())){
+                    amount = Integer.parseInt(donateAmount.getText().toString());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Enter a valid amount", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String eventname = extras.getString("Name");
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
                 eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -177,6 +183,16 @@ public class DonorEventDetails extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    private boolean isValid(String value){
+        try{
+            Integer.parseInt(value);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
 
     }
 }
