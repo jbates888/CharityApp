@@ -129,7 +129,14 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for(DataSnapshot eventshot: dataSnapshot.getChildren()){
                                         //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
-                                        ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp + ", ");
+
+                                        //ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp + ", ");
+                                        if (extras.getString("Volunteers").length() == 0) {
+                                            ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp);
+                                        } else {
+                                            ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + ","  + temp);
+
+                                        }
                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") - 1);
                                     }
                                 }

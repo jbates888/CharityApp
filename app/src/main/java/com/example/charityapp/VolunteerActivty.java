@@ -144,7 +144,11 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                     for(DataSnapshot eventshot: dataSnapshot.getChildren()){
                                                         //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
-                                                        ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp + ", ");
+                                                        if (event.getVolunteers().length() == 0) {
+                                                            ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp);
+                                                        } else {
+                                                            ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers()+ ", " + temp);
+                                                        }
                                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
                                                     }
                                                 }
