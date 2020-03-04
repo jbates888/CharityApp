@@ -28,6 +28,14 @@
     <string name="donateAmountTxt">Enter donation amount</string>
     <string name="donateTxt">Donate</string>
     <string name="volunteerTxt">Volunteer</string>
+    
+    <string name="card_name">Full name on card</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_CVV">CVV</string>
+    <string name="billing_address">Street Address</string>
+    <string name="city">City</string>
+    <string name="state">Full State name</string>
+    <string name="apartment">Apartment</string>
 
     <string-array name="country_arrays">
         <item>Admin</item>
