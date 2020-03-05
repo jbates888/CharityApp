@@ -94,9 +94,9 @@ public class MakeEventActivity extends AppCompatActivity {
                 event.setFunding(0);
                 event.setVolunteers("");
                 event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
+                event.setNumVolunteers(0);
 
                 mRefrence.child(event.getName()).setValue(event);
-
                 Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
 
                 finish();

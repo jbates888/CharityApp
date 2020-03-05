@@ -11,12 +11,13 @@ public class Event {
     private String Description;
     private String Volunteers;
     private int VolunteersNeeded;
+    private int NumVolunteers;
 
     public Event() {
 
     }
 
-    public Event(String Name, String Program, String Date, String Time, int Funding, String Description, String Volunteers, int VolunteersNeeded) {
+    public Event(String Name, String Program, String Date, String Time, int Funding, String Description, String Volunteers, int VolunteersNeeded, int NumVols) {
         this.Name = Name;
         this.Program = Program;
         this.Date = Date;
@@ -25,6 +26,7 @@ public class Event {
         this.Description = Description;
         this.Volunteers = Volunteers;
         this.VolunteersNeeded = VolunteersNeeded;
+        this.NumVolunteers = NumVols;
     }
 
     public String getName() {
@@ -89,5 +91,13 @@ public class Event {
 
     public void setVolunteersNeeded(int VolunteersNeeded) {
         this.VolunteersNeeded = VolunteersNeeded;
+    }
+
+    public void setNumVolunteers(int num){
+        this.NumVolunteers = num;
+    }
+
+    public int getNumVolunteers(){
+        return NumVolunteers;
     }
 }

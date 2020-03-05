@@ -128,17 +128,19 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for(DataSnapshot eventshot: dataSnapshot.getChildren()){
-                                        //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
-
-                                        //ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp + ", ");
                                         if (extras.getString("Volunteers").length() == 0) {
                                             ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp);
                                         } else {
                                             ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + ","  + temp);
 
                                         }
+                                        //get the number of volunteers and add one
+                                        int val = extras.getInt("numVolunteers") + 1;
                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") - 1);
-                                        ref.child(eventshot.getKey()).child("VOLS").child("volunteer").setValue(temp);
+                                        //add volunteer under VolNames and update the number of volunteers
+                                        ref.child(eventshot.getKey()).child("VolNames").child("volunteer" + val).setValue(temp);
+                                        ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
+
                                     }
                                 }
 

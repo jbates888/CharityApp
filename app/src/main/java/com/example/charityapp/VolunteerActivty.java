@@ -80,6 +80,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                 intent.putExtra("Volunteers", event.getVolunteers());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
                                 intent.putExtra("index", 1 + holder.getAdapterPosition());
+                                intent.putExtra("numVolunteers", event.getNumVolunteers());
 
                                 startActivity(intent);
                             }
