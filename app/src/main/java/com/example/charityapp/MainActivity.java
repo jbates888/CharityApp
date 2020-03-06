@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -53,19 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.sendToLogin_btn).setOnClickListener(this);
         findViewById(R.id.loginBtn).setOnClickListener(this);
         findViewById(R.id.guest_btn).setOnClickListener(this);
-        /**
-        passhide.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                if(passhide.getText().toString().equalsIgnoreCase("Show")){
-                    passTxt.setTransformationMethod(null);
-                    passhide.setText("Hide");
-                } else {
-                    passTxt.setTransformationMethod(new PasswordTransformationMethod());
-                    passhide.setText("Show");
-                }
-            }
-        });
-        **/
 
         // Will set the ontouchListener() method to the passhide button to determine if it is being held or not
         passhide.setOnTouchListener(new View.OnTouchListener() {
@@ -128,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent toGuestIntent = new Intent(this, GuestHomeActivty.class);
                 startActivity(toGuestIntent);
                 break;
-
         }
 
     }

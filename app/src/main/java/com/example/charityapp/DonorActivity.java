@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -53,7 +52,6 @@ public class DonorActivity extends AppCompatActivity {
         ref = database.getReference("Events");
 
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override

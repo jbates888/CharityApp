@@ -63,7 +63,6 @@ public class AdminEventDetails extends AppCompatActivity {
         volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
 
-
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -28,7 +28,6 @@ public class GuestEventDetails extends AppCompatActivity {
         fundsTxt = findViewById(R.id.event_details_funds);
         volsTxt = findViewById(R.id.event_details_vols);
 
-
         Bundle extras = getIntent().getExtras();
         nameTxt.setText( extras.getString("Name"));
         progTxt.setText("Program: "  + extras.getString("Program"));

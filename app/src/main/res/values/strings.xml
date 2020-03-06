@@ -37,6 +37,9 @@
     <string name="state">Full State name</string>
     <string name="apartment">Apartment</string>
 
+    <string name="accountDetailsTxt">Admin Account Details</string>
+
+
     <string-array name="country_arrays">
         <item>Admin</item>
         <item>Donor</item>

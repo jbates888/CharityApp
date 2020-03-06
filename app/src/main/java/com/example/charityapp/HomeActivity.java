@@ -145,6 +145,9 @@ public class HomeActivity extends AppCompatActivity  {
                 finish();
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
+            case R.id.ActionAdmin:
+                startActivity(new Intent(this, AccountDetailsActivity.class));
+                return true;
         }
         return true;
     }
