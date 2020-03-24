@@ -33,7 +33,7 @@
         android:id="@+id/description_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/descriptionTxt"
         android:inputType="textPersonName"
@@ -41,35 +41,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/program_edit" />
 
-    <EditText
-        android:id="@+id/date_edit"
+    <Button
+        android:id="@+id/dateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="@string/dateTxt"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:text="@string/SelectDate"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/description_edit"
         app:layout_constraintTop_toBottomOf="@+id/description_edit" />
 
-    <EditText
-        android:id="@+id/time_edit"
+    <TextView
+        android:id="@+id/dateViewTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="@string/timeTxt"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_edit" />
+        android:text="MM/DD/YEAR"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dateBtn"
+        app:layout_constraintEnd_toEndOf="@+id/description_edit" />
 
     <EditText
         android:id="@+id/program_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/programTxt"
         android:inputType="textPersonName"
@@ -81,14 +78,14 @@
         android:id="@+id/volsNeeded_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="# Volunteers Needed"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/timeBtn" />
 
     <Button
         android:id="@+id/create_btn"
@@ -121,4 +118,25 @@
         app:layout_constraintHorizontal_bias="0.711"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volsNeeded_edit" />
+
+    <Button
+        android:id="@+id/timeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:text="@string/SelectTime"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/dateBtn"
+        app:layout_constraintTop_toBottomOf="@+id/dateBtn" />
+
+    <TextView
+        android:id="@+id/timeViewTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timeTxt"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/timeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/volsNeeded_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

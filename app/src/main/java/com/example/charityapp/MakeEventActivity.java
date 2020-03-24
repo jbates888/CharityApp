@@ -5,11 +5,16 @@ package com.example.charityapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,16 +24,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class MakeEventActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebasedatabase;
     DatabaseReference mRefrence;
-    EditText Name, Program, Description, Date, Time, VolsNeeded;
+    EditText Name, Program, Description, VolsNeeded;
+    TextView dateView, timeView;
     int maxId = 0;
-    Button btn;
+    Button btn, Date, Time;
     Button cancelBtn;
 
     Event event;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +48,10 @@ public class MakeEventActivity extends AppCompatActivity {
         Name = findViewById(R.id.name_edit);
         Program = findViewById(R.id.program_edit);
         Description = findViewById(R.id.description_edit);
-        Date = findViewById(R.id.date_edit);
-        Time = findViewById(R.id.time_edit);
+        Date = findViewById(R.id.dateBtn);
+        Time = findViewById(R.id.timeBtn);
+        dateView = findViewById(R.id.dateViewTxt);
+        timeView = findViewById(R.id.timeViewTxt);
         VolsNeeded = findViewById(R.id.volsNeeded_edit);
         btn = findViewById(R.id.create_btn);
         cancelBtn = findViewById(R.id.cancel_btn);
@@ -48,40 +60,28 @@ public class MakeEventActivity extends AppCompatActivity {
 
         mRefrence = FirebaseDatabase.getInstance().getReference("Events");
 
-//        Query q = mRefrence.orderByKey().limitToLast(1);
-//        q.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()) {
-//                    if (dataSnapshot.getChildrenCount() == 0) {
-//                        maxId = 0;
-//                    } else {
-//                        Toast.makeText(getApplicationContext(), dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
-//                        maxId = Integer.parseInt(dataSnapshot.getKey());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+        Date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int month = cal.get(Calendar.MONTH);
+                int year = cal.get(Calendar.YEAR);
 
-//        mRefrence.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    maxId = (int) dataSnapshot.getChildrenCount();
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+                DatePickerDialog dialog = new DatePickerDialog(MakeEventActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month++;
+                String date = month + "/" + dayOfMonth + "/" + year;
+                dateView.setText(date);
+            }
+        };
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 event.setName(Name.getText().toString());
                 event.setProgram(Program.getText().toString());
                 event.setDescription(Description.getText().toString());
-                event.setDate(Date.getText().toString());
+                event.setDate(dateView.getText().toString());
                 event.setTime(Time.getText().toString());
                 event.setFunding(0);
                 event.setVolunteers("");
