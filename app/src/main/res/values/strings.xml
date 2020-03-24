@@ -37,7 +37,8 @@
     <string name="state">Full State name</string>
     <string name="apartment">Apartment</string>
     <string name="SelectDate">Select Date</string>
-    <string name="SelectTime">Select Time</string>
+    <string name="startTime">Start</string>
+    <string name="stopTime">End</string>
 
     <string name="accountDetailsTxt">Admin Account Details</string>
 

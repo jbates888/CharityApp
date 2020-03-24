@@ -85,13 +85,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/timeStopBtn" />
 
     <Button
         android:id="@+id/create_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/cardview_light_background"
         android:text="@string/createBtnTxt"
@@ -100,14 +99,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volsNeeded_edit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/cancelBtnTxt"
@@ -116,19 +113,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.711"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volsNeeded_edit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/timeBtn"
-        android:layout_width="wrap_content"
+        android:id="@+id/timeStartBtn"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#FFFFFF"
-        android:text="@string/SelectTime"
+        android:text="@string/startTime"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="@+id/dateBtn"
+        app:layout_constraintTop_toBottomOf="@+id/dateBtn" />
+
+    <Button
+        android:id="@+id/timeStopBtn"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:text="@string/stopTime"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toEndOf="@+id/timeStartBtn"
         app:layout_constraintTop_toBottomOf="@+id/dateBtn" />
 
     <TextView
@@ -137,6 +146,6 @@
         android:layout_height="wrap_content"
         android:text="@string/timeTxt"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/timeBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/timeStopBtn"
         app:layout_constraintEnd_toEndOf="@+id/volsNeeded_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>
