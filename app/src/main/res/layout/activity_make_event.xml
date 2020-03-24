@@ -57,7 +57,7 @@
         android:id="@+id/dateViewTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MM/DD/YEAR"
+        android:text="MM/DD/YYYY"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/dateBtn"
         app:layout_constraintEnd_toEndOf="@+id/description_edit" />
@@ -117,7 +117,7 @@
 
     <Button
         android:id="@+id/timeStartBtn"
-        android:layout_width="45dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#FFFFFF"
@@ -129,7 +129,7 @@
 
     <Button
         android:id="@+id/timeStopBtn"
-        android:layout_width="45dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"

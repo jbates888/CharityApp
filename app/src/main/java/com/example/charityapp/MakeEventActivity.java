@@ -169,27 +169,35 @@ public class MakeEventActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                event.setName(Name.getText().toString());
-                event.setProgram(Program.getText().toString());
-                event.setDescription(Description.getText().toString());
-                event.setDate(dateView.getText().toString());
-                event.setTime(timeView.getText().toString());
-                event.setFunding(0);
-                event.setVolunteers("");
-                event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
-                event.setNumVolunteers(0);
 
-                mRefrence.child(event.getName()).setValue(event);
-                Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
+                if(!Name.getText().toString().equals("")
+                        && !Program.getText().toString().equals("")
+                        && !Description.getText().toString().equals("")
+                        && !dateView.getText().toString().equals("MM/DD/YYYY")
+                        && !startTime.equals("00:00")
+                        && !EndTime.equals("00:00")
+                        && !VolsNeeded.getText().toString().equals("")){
+                    event.setName(Name.getText().toString());
+                    event.setProgram(Program.getText().toString());
+                    event.setDescription(Description.getText().toString());
+                    event.setDate(dateView.getText().toString());
+                    event.setTime(timeView.getText().toString());
+                    event.setFunding(0);
+                    event.setVolunteers("");
+                    event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
+                    event.setNumVolunteers(0);
 
-                finish();
-                Intent intent = new Intent(MakeEventActivity.this, HomeActivity.class);
-                startActivity(intent);
+                    mRefrence.child(event.getName()).setValue(event);
+                    Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
 
+                    finish();
+                    Intent intent = new Intent(MakeEventActivity.this, HomeActivity.class);
+                    startActivity(intent);
 
-//                if(Name.getText().toString() != "" && Program.getText().toString() != "" && Description.getText().toString() != "" && Date.getText().toString() != "" && Time.getText().toString() != ""){
-//
-//                }
+                } else{
+                    Toast.makeText(getApplicationContext(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
