@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -146,7 +147,8 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
             case R.id.ActionAdmin:
-                startActivity(new Intent(this, AccountDetailsActivity.class));
+                Intent broswerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://console.firebase.google.com/u/0/project/charity-app-43ea3/authentication/users"));
+                startActivity(broswerIntent);
                 return true;
         }
         return true;
