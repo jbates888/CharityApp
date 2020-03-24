@@ -15,4 +15,9 @@
         android:id="@+id/ActionAdmin"
         android:title="@string/accountDetailsTxt"
         app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/DataAdmin"
+        android:title="Organization Analytics"
+        app:showAsAction="never"></item>
 </menu>

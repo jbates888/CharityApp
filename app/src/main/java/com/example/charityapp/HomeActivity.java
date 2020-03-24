@@ -143,12 +143,14 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.ActionCreate:
-                finish();
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
             case R.id.ActionAdmin:
                 Intent broswerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://console.firebase.google.com/u/0/project/charity-app-43ea3/authentication/users"));
                 startActivity(broswerIntent);
+                return true;
+            case R.id.DataAdmin:
+                startActivity(new Intent(this, OrgAnalyticsActivity.class));
                 return true;
         }
         return true;

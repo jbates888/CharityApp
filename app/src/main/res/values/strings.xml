@@ -28,7 +28,7 @@
     <string name="donateAmountTxt">Enter donation amount</string>
     <string name="donateTxt">Donate</string>
     <string name="volunteerTxt">Volunteer</string>
-    
+
     <string name="card_name">Full name on card</string>
     <string name="card_number">Card Number</string>
     <string name="card_CVV">CVV</string>
@@ -39,6 +39,8 @@
     <string name="SelectDate">Select Date</string>
     <string name="startTime">Start</string>
     <string name="stopTime">End</string>
+
+    <string name="analytics">Analytics</string>
 
     <string name="accountDetailsTxt">Admin Account Details</string>
 

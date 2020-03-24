@@ -211,6 +211,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
+                        } else{
+                            Intent intentProf = new Intent(MainActivity.this, ProfileActivity.class);
+                            startActivity(intentProf);
                         }
                     } else {
                         //prompt the user that there was a failed login
