@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AdminEventDetails extends AppCompatActivity {
 
     FirebaseDatabase mFirebasedatabase;
-    DatabaseReference mRefrence;
+    DatabaseReference mRefrence, dataRefrence;
 
     TextView nameTxt;
     TextView progTxt;
@@ -41,6 +41,7 @@ public class AdminEventDetails extends AppCompatActivity {
         setContentView(R.layout.activity_admin_event_details);
 
         ref = FirebaseDatabase.getInstance().getReference("Events");
+        dataRefrence = FirebaseDatabase.getInstance().getReference("Data");
 
         nameTxt = findViewById(R.id.event_details_title);
         progTxt = findViewById(R.id.event_details_prog);
@@ -81,6 +82,19 @@ public class AdminEventDetails extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
+                dataRefrence.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int value = dataSnapshot.child("numEvents").getValue(Integer.class);
+                        dataRefrence.child("numEvents").setValue(value - 1);
+                        int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
+                        dataRefrence.child("curTotal").setValue(value2 - (extras.getInt("Funds", 0)));
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Code
                     }
                 });
                 startActivity(new Intent(AdminEventDetails.this, MainActivity.class));

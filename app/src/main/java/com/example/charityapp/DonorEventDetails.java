@@ -33,7 +33,7 @@ public class DonorEventDetails extends AppCompatActivity {
     TextView volsNeededTxt;
     Button volunteerBtn;
     Button donateBtn;
-    DatabaseReference ref;
+    DatabaseReference ref, dataReference;
     FirebaseAuth mAuth;
     TextView donateAmount;
     int amount;
@@ -67,6 +67,7 @@ public class DonorEventDetails extends AppCompatActivity {
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
 
         ref = FirebaseDatabase.getInstance().getReference("Events");
+        dataReference = FirebaseDatabase.getInstance().getReference("Data");
         mAuth = FirebaseAuth.getInstance();
 
         donateBtn.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +95,21 @@ public class DonorEventDetails extends AppCompatActivity {
 
                     }
                 });
+
+                dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int value = dataSnapshot.child("Total").getValue(Integer.class);
+                        dataReference.child("Total").setValue(value + amount);
+                        int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
+                        dataReference.child("curTotal").setValue(value2 + amount);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Code
+                    }
+                });
+
                 finish();
                 startActivity(new Intent(DonorEventDetails.this, DonorActivity.class));
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();

@@ -28,38 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyticsTxt" />
 
-    <TextView
-        android:id="@+id/numAdminTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/numAdminTxt"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/curTotTxt" />
-
-    <TextView
-        android:id="@+id/numDonTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/numDonTxt"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numAdminTxt" />
-
-    <TextView
-        android:id="@+id/numVolTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/numVolTxt"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numDonTxt" />
 
     <TextView
         android:id="@+id/curTotTxt"
@@ -90,35 +58,6 @@
         app:layout_constraintStart_toEndOf="@+id/curTotTxt"
         app:layout_constraintTop_toTopOf="@+id/curTotTxt" />
 
-    <TextView
-        android:id="@+id/adTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="0"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/numAdminTxt"
-        app:layout_constraintTop_toTopOf="@+id/numAdminTxt" />
-
-    <TextView
-        android:id="@+id/donTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="0"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/numDonTxt"
-        app:layout_constraintTop_toTopOf="@+id/numDonTxt" />
-
-    <TextView
-        android:id="@+id/volTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="0"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/numVolTxt"
-        app:layout_constraintTop_toTopOf="@+id/numVolTxt" />
 
     <TextView
         android:id="@+id/numEventsTxt"
@@ -126,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/eventsTxt"
+        android:text="@string/curtotalEventsTxt"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numVolTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/curTotTxt" />
 
     <TextView
         android:id="@+id/eventTxt"
@@ -140,5 +79,26 @@
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/numEventsTxt"
         app:layout_constraintTop_toTopOf="@+id/numEventsTxt" />
+
+    <TextView
+        android:id="@+id/totNumEventsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/eventsTxt"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numEventsTxt" />
+
+    <TextView
+        android:id="@+id/totNEventsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/numEventsTxt"
+        app:layout_constraintTop_toTopOf="@+id/totNumEventsTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,8 @@ import java.util.Calendar;
 public class MakeEventActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebasedatabase;
-    DatabaseReference mRefrence;
+    DatabaseReference mRefrence, dataRefrence;
+
     EditText Name, Program, Description, VolsNeeded;
     TextView dateView, timeView;
     int maxId = 0;
@@ -66,6 +67,7 @@ public class MakeEventActivity extends AppCompatActivity {
         event = new Event();
 
         mRefrence = FirebaseDatabase.getInstance().getReference("Events");
+        dataRefrence = FirebaseDatabase.getInstance().getReference("Data");
 
         TimeStart.setOnClickListener(new View.OnClickListener() {
             Calendar cal = Calendar.getInstance();
@@ -188,6 +190,20 @@ public class MakeEventActivity extends AppCompatActivity {
                     event.setNumVolunteers(0);
 
                     mRefrence.child(event.getName()).setValue(event);
+                    dataRefrence.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            int value = dataSnapshot.child("numEvents").getValue(Integer.class);
+                            dataRefrence.child("numEvents").setValue(value + 1);
+                            int value2 = dataSnapshot.child("totNumEvents").getValue(Integer.class);
+                            dataRefrence.child("totNumEvents").setValue(value2 + 1);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Code
+                        }
+                    });
+
                     Toast.makeText(getApplicationContext(), "Event Created", Toast.LENGTH_LONG).show();
 
                     finish();

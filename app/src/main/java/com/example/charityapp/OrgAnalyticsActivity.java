@@ -21,10 +21,8 @@ public class OrgAnalyticsActivity extends AppCompatActivity {
 
     TextView total;
     TextView curTotal;
-    TextView nAdmin;
-    TextView nDon;
-    TextView nVol;
     TextView nEvents;
+    TextView nTotEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +34,8 @@ public class OrgAnalyticsActivity extends AppCompatActivity {
 
         total = findViewById(R.id.totTxt);
         curTotal = findViewById(R.id.curTxt);
-        nAdmin = findViewById(R.id.adTxt);
-        nDon = findViewById(R.id.donTxt);
-        nVol = findViewById(R.id.volTxt);
         nEvents = findViewById(R.id.eventTxt);
+        nTotEvents = findViewById(R.id.totNEventsTxt);
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -47,10 +43,8 @@ public class OrgAnalyticsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 total.setText(dataSnapshot.child("Total").getValue().toString());
                 curTotal.setText(dataSnapshot.child("curTotal").getValue().toString());
-                nAdmin.setText(dataSnapshot.child("numAdmin").getValue().toString());
-                nDon.setText(dataSnapshot.child("numDonor").getValue().toString());
-                nVol.setText(dataSnapshot.child("numVols").getValue().toString());
                 nEvents.setText(dataSnapshot.child("numEvents").getValue().toString());
+                nTotEvents.setText(dataSnapshot.child("totNumEvents").getValue().toString());
             }
 
             @Override

@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity  {
 
     RecyclerView recyclerView;
-    DatabaseReference ref;
+    DatabaseReference ref, dataReference;
     FirebaseDatabase database;
 
     @Override
@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity  {
 
         database = FirebaseDatabase.getInstance();
         ref = FirebaseDatabase.getInstance().getReference("Events");
+        dataReference = FirebaseDatabase.getInstance().getReference("Data");
     }
 
     @Override
@@ -99,6 +100,20 @@ public class HomeActivity extends AppCompatActivity  {
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                                            }
+                                        });
+
+                                        dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                int value = dataSnapshot.child("numEvents").getValue(Integer.class);
+                                                dataReference.child("numEvents").setValue(value - 1);
+                                                int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
+                                                dataReference.child("curTotal").setValue(value2 - event.getFunding());
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                // Code
                                             }
                                         });
                                     }

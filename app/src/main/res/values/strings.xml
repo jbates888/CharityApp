@@ -43,9 +43,7 @@
     <string name="analytics">Analytics</string>
     <string name="totalTxt">Total Funds Raised: $</string>
     <string name="curtotalTxt">Current Funds Raised: $</string>
-    <string name="numAdminTxt">Number of Admin Accounts: </string>
-    <string name="numDonTxt">Number of Donor Accounts: </string>
-    <string name="numVolTxt">Number of Volunteer Accounts: </string>
+    <string name="curtotalEventsTxt">Current Number of Events: </string>
     <string name="eventsTxt">Total Number Events Held: </string>
 
     <string name="accountDetailsTxt">Admin Account Details</string>
