@@ -48,6 +48,8 @@
 
     <string name="accountDetailsTxt">Admin Account Details</string>
 
+    <string name="unResDonTxt">Make an Unrestricted Donation</string>
+
 
     <string-array name="country_arrays">
         <item>Admin</item>

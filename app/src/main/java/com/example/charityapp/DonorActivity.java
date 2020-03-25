@@ -174,7 +174,7 @@ public class DonorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.guestmenu, menu);
+        menuInflater.inflate(R.menu.donormenu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -186,6 +186,9 @@ public class DonorActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.donate:
+                startActivity(new Intent(this, DonateActivity.class));
                 return true;
         }
         return true;

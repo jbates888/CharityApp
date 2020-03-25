@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/red_divide_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrgAnalyticsActivity"></activity>
+        <activity android:name=".DonateActivity" />
+        <activity android:name=".OrgAnalyticsActivity" />
         <activity android:name=".Payment" />
         <activity android:name=".GuestEventDetails" />
         <activity android:name=".VolunteerEventDetails" />
