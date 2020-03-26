@@ -176,7 +176,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 }
                 Date currdate = new Date();
                 long diff = currdate.getTime() - exitdate.getTime();
-                if(diff >= 0){
+                if(diff > 86400000){
                     Toast.makeText(getApplicationContext(), "Please enter future date", Toast.LENGTH_LONG).show();
                 } else{
                     dateView.setText(date);
