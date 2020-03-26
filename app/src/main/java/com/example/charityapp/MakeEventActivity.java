@@ -26,7 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MakeEventActivity extends AppCompatActivity {
 
@@ -99,8 +102,7 @@ public class MakeEventActivity extends AppCompatActivity {
                         } else{
                             minString = "" + minute;
                         }
-                        startTime = hourOfDay + ":" + minString + m;
-                        timeView.setText(startTime + " - " + EndTime);
+
                     }
                 }, hour, minute, false);
                 timePickerDialog.show();
@@ -164,7 +166,21 @@ public class MakeEventActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month++;
                 String date = month + "/" + dayOfMonth + "/" + year;
-                dateView.setText(date);
+
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date exitdate = null;
+                try {
+                    exitdate = df.parse(year + "-" + month + "-" + dayOfMonth);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date currdate = new Date();
+                long diff = currdate.getTime() - exitdate.getTime();
+                if(diff >= 0){
+                    Toast.makeText(getApplicationContext(), "Please enter future date", Toast.LENGTH_LONG).show();
+                } else{
+                    dateView.setText(date);
+                }
             }
         };
 
