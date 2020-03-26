@@ -74,7 +74,6 @@ public class HomeActivity extends AppCompatActivity  {
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
 
                                 startActivity(intent);
-
                             }
                         });
 
@@ -122,7 +121,16 @@ public class HomeActivity extends AppCompatActivity  {
                                 builder.setPositiveButton("Modify Event", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
+                                        Intent intent = new Intent(HomeActivity.this, EditEventActivity.class);
+                                        intent.putExtra("Name", event.getName());
+                                        intent.putExtra("Program", event.getProgram());
+                                        intent.putExtra("Description", event.getDescription());
+                                        intent.putExtra("Date", event.getDate());
+                                        intent.putExtra("Time", event.getTime());
+                                        intent.putExtra("Funds", event.getFunding());
+                                        intent.putExtra("Volunteers", event.getVolunteers());
+                                        intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
+                                        startActivity(intent);
                                     }
                                 });
 

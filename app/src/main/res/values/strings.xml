@@ -50,6 +50,8 @@
 
     <string name="unResDonTxt">Make an Unrestricted Donation</string>
 
+    <string name="editEventTxt">Edit Event</string>
+
 
     <string-array name="country_arrays">
         <item>Admin</item>
