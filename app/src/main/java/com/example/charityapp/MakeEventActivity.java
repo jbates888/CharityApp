@@ -83,6 +83,7 @@ public class MakeEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String m;
                         String minString;
+                        int tempHours = hourOfDay;
                         if (hourOfDay == 0) {
                             hourOfDay += 12;
                             m = "AM";
@@ -102,6 +103,8 @@ public class MakeEventActivity extends AppCompatActivity {
                         } else{
                             minString = "" + minute;
                         }
+                        startTime = hourOfDay + ":" + minString + m;
+                        timeView.setText(startTime + " - " + EndTime);
 
                     }
                 }, hour, minute, false);
@@ -146,6 +149,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+
 
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,4 +246,7 @@ public class MakeEventActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }
