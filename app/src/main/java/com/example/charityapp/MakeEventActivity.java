@@ -214,7 +214,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 } else {
                     militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
                 }
-                
+
                 if (!endAmOrPm.equals("") && !startAmOrPm.equals("") && militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
                 } else if (!Name.getText().toString().equals("")
