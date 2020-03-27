@@ -42,8 +42,15 @@ public class MakeEventActivity extends AppCompatActivity {
     Button btn, Date, TimeStart, TimeEnd;
     Button cancelBtn;
     String startTime, EndTime;
-
     Event event;
+    int militaryStartTimeDecimal = 0;
+    int militaryEndTimeDecimal = 0;
+    int startHours = 0;
+    int startMin = 0;
+    int endMin = 0;
+    int endHours = 0;
+    String startAmOrPm = "";
+    String endAmOrPm = "";
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -66,6 +73,7 @@ public class MakeEventActivity extends AppCompatActivity {
 
         startTime = "00:00";
         EndTime = "00:00";
+
 
         event = new Event();
 
@@ -105,7 +113,9 @@ public class MakeEventActivity extends AppCompatActivity {
                         }
                         startTime = hourOfDay + ":" + minString + m;
                         timeView.setText(startTime + " - " + EndTime);
-
+                        startAmOrPm = m;
+                        startHours = hourOfDay;
+                        startMin = minute;
                     }
                 }, hour, minute, false);
                 timePickerDialog.show();
@@ -144,6 +154,9 @@ public class MakeEventActivity extends AppCompatActivity {
                         }
                         EndTime = hourOfDay + ":" + minString + m;
                         timeView.setText(startTime + " - " + EndTime);
+                        endAmOrPm = m;
+                        endHours = hourOfDay;
+                        endMin = minute;
                     }
                 }, hour, minute, false);
                 timePickerDialog.show();
@@ -191,8 +204,20 @@ public class MakeEventActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(!Name.getText().toString().equals("")
+                if (startAmOrPm.equals("AM")) {
+                    militaryStartTimeDecimal = startHours + (startMin / 60);
+                } else {
+                    militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
+                }
+                if (endAmOrPm.equals("AM")) {
+                    militaryEndTimeDecimal = endHours + (endMin / 60);
+                } else {
+                    militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
+                }
+                
+                if (!endAmOrPm.equals("") && !startAmOrPm.equals("") && militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
+                    Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
+                } else if (!Name.getText().toString().equals("")
                         && !Program.getText().toString().equals("")
                         && !Description.getText().toString().equals("")
                         && !dateView.getText().toString().equals("MM/DD/YYYY")
