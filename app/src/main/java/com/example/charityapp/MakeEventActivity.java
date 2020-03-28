@@ -43,12 +43,12 @@ public class MakeEventActivity extends AppCompatActivity {
     Button cancelBtn;
     String startTime, EndTime;
     Event event;
-    int militaryStartTimeDecimal = 0;
-    int militaryEndTimeDecimal = 0;
-    int startHours = 0;
-    int startMin = 0;
-    int endMin = 0;
-    int endHours = 0;
+    double militaryStartTimeDecimal = 0;
+    double militaryEndTimeDecimal = 0;
+    double startHours = 0;
+    double startMin = 0;
+    double endMin = 0;
+    double endHours = 0;
     String startAmOrPm = "";
     String endAmOrPm = "";
 
@@ -205,20 +205,26 @@ public class MakeEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (startAmOrPm.equals("AM")) {
-                    militaryStartTimeDecimal = startHours + (startMin / 60);
+                    if (startHours == 12) {
+                        militaryStartTimeDecimal = startHours - 12 + (startMin / 60);
+                    } else {
+                        militaryStartTimeDecimal = startHours + (startMin / 60);
+                    }
                 } else {
                     militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
                 }
                 if (endAmOrPm.equals("AM")) {
-                    militaryEndTimeDecimal = endHours + (endMin / 60);
+                    if (endHours == 12) {
+                        militaryEndTimeDecimal = endHours - 12 + (endMin / 60);
+                    } else {
+                        militaryEndTimeDecimal = endHours + (endMin / 60);
+                    }
                 } else {
                     militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
                 }
 
-                if (!endAmOrPm.equals("") && !startAmOrPm.equals("") && militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
+                if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
-                    militaryStartTimeDecimal = 0;
-                    militaryEndTimeDecimal = 0;
                 } else if (!Name.getText().toString().equals("")
                         && !Program.getText().toString().equals("")
                         && !Description.getText().toString().equals("")
