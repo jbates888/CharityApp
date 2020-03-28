@@ -93,7 +93,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                 String temp = user.getDisplayName().replaceAll("Volunteer:", "");
 
                                 //check if the max amount of volunteers has been reached
-                                if(event.getVolunteersNeeded()<= 0){
+                                if(event.getVolunteersNeeded()<= 0 && !event.getVolunteers().contains(temp)){
                                     AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                                     builder.setCancelable(true);
                                     builder.setTitle("Volunteer Limit Reached");
@@ -111,13 +111,48 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                 else if(event.getVolunteers().contains(temp)) {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                                     builder.setCancelable(true);
-                                    builder.setTitle("Already Signed up");
-                                    builder.setMessage("You are already signed up for this event");
+                                    builder.setTitle("Un-Volunteer");
+                                    builder.setMessage("Would you like to un sign up for this event?");
 
-                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.cancel();
+                                        }
+                                    });
+
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String eventname = event.getName();
+                                            Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                                            eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                        String original = event.getVolunteers();
+                                                        String newVolList;
+                                                        if (event.getVolunteers().length() <= temp.length() + 1) {
+                                                            newVolList = original.replace(temp, "");
+                                                        } else if(event.getVolunteers().substring(0, temp.length()).equals(temp)) {
+                                                            newVolList = original.replace(temp + ",", "");
+                                                        } else{
+                                                            newVolList = original.replace("," + temp, "");
+                                                        }
+
+                                                        ref.child(eventshot.getKey()).child("volunteers").setValue(newVolList);
+                                                        //get the number of volunteers and add one
+                                                        int val = event.getNumVolunteers() - 1;
+                                                        ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() + 1);
+                                                        ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
+                                                    }
+                                                }
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                     builder.show();
@@ -148,7 +183,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                                         if (event.getVolunteers().length() == 0) {
                                                             ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp);
                                                         } else {
-                                                            ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers()+ ", " + temp);
+                                                            ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers()+ "," + temp);
                                                         }
                                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
                                                     }

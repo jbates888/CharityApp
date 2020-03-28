@@ -21,6 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
+
 public class DonorEventDetails extends AppCompatActivity {
 
     TextView nameTxt;
@@ -38,10 +46,15 @@ public class DonorEventDetails extends AppCompatActivity {
     TextView donateAmount;
     int amount;
 
+    boolean bool;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_event_details);
+
+        bool = false;
 
         nameTxt = findViewById(R.id.event_details_title);
         progTxt = findViewById(R.id.event_details_prog);
@@ -119,15 +132,33 @@ public class DonorEventDetails extends AppCompatActivity {
         volunteerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String eventname = extras.getString("Name");
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 String temp = user.getDisplayName().replaceAll("Donor:", "");
+//                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            Event event = snapshot.getValue(Event.class);
+//
+//                            if(event.getVolunteers().contains(temp)){
+//                                if(event.getDate().equals(extras.getString("Date"))){
+//                                    Toast.makeText(getApplicationContext(), "Overlap!!!", Toast.LENGTH_LONG).show();
+//                                    setBool();
+//                                }
+//                            }
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        // Code
+//                    }
+//                });
 
                 //check if the max amount of volunteers has been reached
-                if(extras.getInt("VolunteersNeeded") <= 0){
+                if (extras.getInt("VolunteersNeeded") <= 0 && !extras.getString("Volunteers").contains(temp)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(DonorEventDetails.this);
                     builder.setCancelable(true);
                     builder.setTitle("Volunteer Limit Reached");
@@ -142,21 +173,73 @@ public class DonorEventDetails extends AppCompatActivity {
                     builder.show();
                 }
                 //check if that users name is already signed up
-                else if(extras.getString("Volunteers").contains(temp)) {
+                else if (extras.getString("Volunteers").contains(temp)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(DonorEventDetails.this);
                     builder.setCancelable(true);
-                    builder.setTitle("Already Signed up");
-                    builder.setMessage("You are already signed up for this event");
+                    builder.setTitle("Un-Volunteer");
+                    builder.setMessage("Would you like to un sign up for this event?");
 
-                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                         }
                     });
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String eventname = extras.getString("Name");
+                            Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                            eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                        String original = eventshot.child("volunteers").getValue(String.class);
+                                        String newVolList;
+                                        if (extras.getString("Volunteers").length() <= temp.length() + 1) {
+                                            newVolList = original.replace(temp, "");
+                                        } else if(extras.getString("Volunteers").substring(0, temp.length()).equals(temp)) {
+                                            newVolList = original.replace(temp + ",", "");
+                                        } else{
+                                            newVolList = original.replace("," + temp, "");
+                                        }
+
+                                        ref.child(eventshot.getKey()).child("volunteers").setValue(newVolList);
+                                        //get the number of volunteers and add one
+                                        int val = extras.getInt("numVolunteers") - 1;
+                                        ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") + 1);
+                                        ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            finish();
+                            startActivity(new Intent(DonorEventDetails.this, DonorActivity.class));
+                            Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     builder.show();
                     //if they are not signed up, ask if they would like to
-                }else{
+                }
+//                else if(bool) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(DonorEventDetails.this);
+//                    builder.setCancelable(true);
+//                    builder.setTitle("Event Overlap");
+//                    builder.setMessage("You are already signed up for and event at this time");
+//
+//                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    builder.show();
+//           }
+                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(DonorEventDetails.this);
                     builder.setCancelable(true);
                     builder.setTitle("Volunteer for event");
@@ -185,7 +268,6 @@ public class DonorEventDetails extends AppCompatActivity {
                                             ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + ","  + temp);
 
                                         }
-//                                        ref.child(eventshot.getKey()).child("volunteers").setValue(extras.getString("Volunteers") + temp + ", ");
                                         ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") - 1);
                                     }
                                 }
@@ -217,4 +299,9 @@ public class DonorEventDetails extends AppCompatActivity {
         }
 
     }
+
+//    private void setBool(){
+//        bool = true;
+//    }
+
 }

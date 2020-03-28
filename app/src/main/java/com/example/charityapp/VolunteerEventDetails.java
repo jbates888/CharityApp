@@ -77,7 +77,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                 String temp = user.getDisplayName().replaceAll("Volunteer:", "");
 
                 //check if the max amount of volunteers has been reached
-                if(extras.getInt("VolunteersNeeded") <= 0){
+                if(extras.getInt("VolunteersNeeded") <= 0 && !extras.getString("Volunteers").contains(temp)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
                     builder.setCancelable(true);
                     builder.setTitle("Volunteer Limit Reached");
@@ -95,13 +95,50 @@ public class VolunteerEventDetails extends AppCompatActivity {
                 else if(extras.getString("Volunteers").contains(temp)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
                     builder.setCancelable(true);
-                    builder.setTitle("Already Signed up");
-                    builder.setMessage("You are already signed up for this event");
+                    builder.setTitle("Un-Volunteer");
+                    builder.setMessage("Would you like to un sign up for this event?");
 
-                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                        }
+                    });
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String eventname = extras.getString("Name");
+                            Query eventquery = ref.orderByChild("name").equalTo(eventname);
+                            eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                        String original = eventshot.child("volunteers").getValue(String.class);
+                                        String newVolList;
+                                        if (extras.getString("Volunteers").length() <= temp.length() + 1) {
+                                            newVolList = original.replace(temp, "");
+                                        } else if(extras.getString("Volunteers").substring(0, temp.length()).equals(temp)) {
+                                            newVolList = original.replace(temp + ",", "");
+                                        } else{
+                                            newVolList = original.replace("," + temp, "");
+                                        }
+
+                                        ref.child(eventshot.getKey()).child("volunteers").setValue(newVolList);
+                                        //get the number of volunteers and add one
+                                        int val = extras.getInt("numVolunteers") - 1;
+                                        ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(extras.getInt("VolunteersNeeded") + 1);
+                                        ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            finish();
+                            startActivity(new Intent(VolunteerEventDetails.this, VolunteerActivty.class));
+                            Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
                         }
                     });
                     builder.show();
