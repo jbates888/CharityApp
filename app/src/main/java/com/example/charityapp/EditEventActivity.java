@@ -210,9 +210,10 @@ public class EditEventActivity extends AppCompatActivity {
                 } else {
                     militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
                 }
-
                 if (!endAmOrPm.equals("") && !startAmOrPm.equals("") && militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
+                    militaryStartTimeDecimal = 0;
+                    militaryEndTimeDecimal = 0;
                 } else if (!Program.getText().toString().equals("")
                         && !Description.getText().toString().equals("")
                         && !dateView.getText().toString().equals("MM/DD/YYYY")
