@@ -28,12 +28,9 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    //
-    EditText userNameTxt;
+    EditText userNameTxt, adminPwordTxt;
     Spinner spinner;
-
     String type = "";
-
     FirebaseAuth mAuth;
 
     @Override
@@ -47,15 +44,15 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         mAuth = FirebaseAuth.getInstance();
 
         userNameTxt = findViewById(R.id.userName_txt);
+        adminPwordTxt = findViewById(R.id.adminPword_txt);
         spinner = findViewById(R.id.userdrop);
 
         spinner.setOnItemSelectedListener(this);
 
         ArrayList<String> types = new ArrayList<>();
-        types.add("Admin");
         types.add("Donor");
         types.add("Volunteer");
-        //types.add("Other");
+        types.add("Admin");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -70,6 +67,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 if(userName.isEmpty()){
                     userNameTxt.setError("Must enter user name");
                     userNameTxt.requestFocus();
+                    return;
+                } else if(type.equals("Admin") && !adminPwordTxt.getText().toString().equals("AdminPword58")){
+                    adminPwordTxt.setError("Must enter correct password to become an Admin");
+                    adminPwordTxt.requestFocus();
                     return;
                 }
 
@@ -96,10 +97,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
                                         startActivity(intent);
                                     }
-
-//                                    Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
-//                                    //intent.putExtra("username", type);
-//                                    startActivity(intent);
                                 }
                             });
                 }
@@ -150,9 +147,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         type = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + type, Toast.LENGTH_LONG).show();
+        if(position != 2){
+            adminPwordTxt.setVisibility(View.INVISIBLE);
+        } else{
+            adminPwordTxt.setVisibility(View.VISIBLE);
+        }
 
     }
 
