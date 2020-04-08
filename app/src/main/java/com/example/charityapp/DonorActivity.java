@@ -89,7 +89,7 @@ public class DonorActivity extends AppCompatActivity {
                             @Override
                             public boolean onLongClick(View v) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                String temp = user.getDisplayName().replaceAll("Volunteer:", "");
+                                String temp = user.getDisplayName().replaceAll("Donor:", "");
                                 ValueEventListener eventListener = new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
