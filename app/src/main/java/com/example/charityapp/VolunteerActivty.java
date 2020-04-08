@@ -192,12 +192,10 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                         count++;
                                         displayMessages(two_events[0], count, event, temp);
                                         two_events[0] = 0;
-
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                                     }
                                 };
                                 ref.addListenerForSingleValueEvent(eventListener);
@@ -237,7 +235,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                 builder.setCancelable(true);
                 builder.setTitle("Volunteering for Multiple Events");
-                builder.setMessage("You cannot volunteer for multiple events in the same day");
+                builder.setMessage("You cannot volunteer for multiple events at the same time.");
 
                 builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -341,7 +339,6 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                     ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
                                 }
                             }
-
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
