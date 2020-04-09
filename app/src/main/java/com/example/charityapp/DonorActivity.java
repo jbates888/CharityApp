@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -88,114 +89,124 @@ public class DonorActivity extends AppCompatActivity {
                         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View v) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                String temp = user.getDisplayName().replaceAll("Donor:", "");
-                                ValueEventListener eventListener = new ValueEventListener() {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(DonorActivity.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("Contribute To Event");
+                                builder.setMessage("Would you like to sign up or donate to this event?");
+
+
+
+                                builder.setPositiveButton("Donate", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        Log.d("DonorActivity", "Number of events" + Long.toString(dataSnapshot.getChildrenCount()));
-                                        Iterable<DataSnapshot> events = dataSnapshot.getChildren();
-                                        int[] two_events = {0};
-                                        int count = 0;
-                                        for (DataSnapshot s : events) {
+                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), DonorEventDetails.class);
+//                                        startActivity(myIntent);
+//                                        return;
+                                        dialog.cancel();
+                                    }
+                                });
 
-                                            if(event.getName().equals(s.getKey())){
-                                                //do nothing
-                                            } else {
-                                                Log.d("volunteeractivity", "Event name" + s.getKey());
+                                builder.setNegativeButton("Volunteer", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        String temp = user.getDisplayName().replaceAll("Donor:", "");
+                                        ValueEventListener eventListener = new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Log.d("DonorActivity", "Number of events" + Long.toString(dataSnapshot.getChildrenCount()));
+                                                Iterable<DataSnapshot> events = dataSnapshot.getChildren();
+                                                int[] two_events = {0};
+                                                int count = 0;
+                                                for (DataSnapshot s : events) {
 
-                                                //two_events[0] = 1;
-                                                Log.d("volunteeractivity", "Date after test" + two_events[0]);
-                                                String month = s.child("date").getValue(String.class);
-                                                String[] compareevent = month.split("\\/");
-                                                //Log.d("split the date", comapareevent[2]);
-                                                String[] eventdetails = event.getDate().split("\\/");
-//                                                //String ddate = date.substring(0, 2);
-//                                                if (month.charAt(2) == '/') {
-//                                                    month = month.substring(0, 2);
-//                                                } else {
-//                                                    month = month.substring(0, 3);
-//                                                }
-//                                                //Log.d("volunteeractivity", "Date after test" + date);
-//                                                String eventmonth = event.getDate();
-//                                                if (eventmonth.charAt(2) == '/') {
-//                                                    eventmonth = eventmonth.substring(0, 2);
-//                                                } else {
-//                                                    eventmonth = eventmonth.substring(0, 3);
-//                                                }
-////                                                Log.d("volunteeractivity", "Event date " + eventdate);
-////                                                Log.d("volunteeractivity", "Date date " + date);
+                                                    if (event.getName().equals(s.getKey())) {
+                                                        //do nothing
+                                                    } else {
+                                                        Log.d("volunteeractivity", "Event name" + s.getKey());
 
-                                                if(eventdetails[2].equals(compareevent[2])){
-                                                    if(eventdetails[0].equals(compareevent[0])){
-                                                        if(eventdetails[1].equals(compareevent[1])){
-                                                            String vols = s.child("volunteers").getValue(String.class);
-                                                            if(vols.contains(temp)){
-                                                                String[] comparetimes = s.child("time").getValue(String.class).split("-");
-                                                                Log.d("times", comparetimes[0]);
-                                                                String[] times = event.getTime().split("-");
-                                                                Date start1 = null;
-                                                                Date start2 = null;
-                                                                Date end1 = null;
-                                                                Date end2 = null;
-                                                                for(int i = 0; i < comparetimes.length; i++){
-                                                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
-                                                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
-                                                                    Date date = null;
-                                                                    try {
-                                                                        date = oldformat.parse(comparetimes[i]);
-                                                                    } catch (ParseException e) {
-                                                                        e.printStackTrace();
+                                                        //two_events[0] = 1;
+                                                        Log.d("volunteeractivity", "Date after test" + two_events[0]);
+                                                        String month = s.child("date").getValue(String.class);
+                                                        String[] compareevent = month.split("\\/");
+                                                        //Log.d("split the date", comapareevent[2]);
+                                                        String[] eventdetails = event.getDate().split("\\/");
+
+                                                        if (eventdetails[2].equals(compareevent[2])) {
+                                                            if (eventdetails[0].equals(compareevent[0])) {
+                                                                if (eventdetails[1].equals(compareevent[1])) {
+                                                                    String vols = s.child("volunteers").getValue(String.class);
+                                                                    if (vols.contains(temp)) {
+                                                                        String[] comparetimes = s.child("time").getValue(String.class).split("-");
+                                                                        Log.d("times", comparetimes[0]);
+                                                                        String[] times = event.getTime().split("-");
+                                                                        Date start1 = null;
+                                                                        Date start2 = null;
+                                                                        Date end1 = null;
+                                                                        Date end2 = null;
+                                                                        for (int i = 0; i < comparetimes.length; i++) {
+                                                                            SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                                                            SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                                                            Date date = null;
+                                                                            try {
+                                                                                date = oldformat.parse(comparetimes[i]);
+                                                                            } catch (ParseException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                            comparetimes[i] = mformat.format(date);
+                                                                            if (i == 0)
+                                                                                start1 = date;
+                                                                            if (i == 1) end1 = date;
+                                                                        }
+
+                                                                        for (int i = 0; i < times.length; i++) {
+                                                                            SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                                                            SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                                                            Date date = null;
+                                                                            try {
+                                                                                date = oldformat.parse(times[i]);
+                                                                            } catch (ParseException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                            times[i] = mformat.format(date);
+                                                                            if (i == 0)
+                                                                                start2 = date;
+                                                                            if (i == 1) end2 = date;
+                                                                        }
+                                                                        if ((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))) {
+                                                                            two_events[0] = 1;
+                                                                        }
                                                                     }
-                                                                    comparetimes[i] = mformat.format(date);
-                                                                    if(i == 0) start1 = date;
-                                                                    if(i == 1) end1 = date;
-                                                                }
-
-                                                                for(int i = 0; i < times.length; i++){
-                                                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
-                                                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
-                                                                    Date date = null;
-                                                                    try {
-                                                                        date = oldformat.parse(times[i]);
-                                                                    } catch (ParseException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-                                                                    times[i] = mformat.format(date);
-                                                                    if(i == 0) start2 = date;
-                                                                    if(i == 1) end2 = date;
-                                                                }
-                                                                if((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))){
-                                                                    two_events[0] = 1;
                                                                 }
                                                             }
-//                                                            two_events[0] = 1;
+
                                                         }
+
                                                     }
-//                                                    String day = s.child("date").getValue(String.class);
-//                                                    String eventday = event.getDate();
-//                                                    if (day.charAt(2) == '/') {
-//                                                        day = day.substring(0, 2);
-//                                                    } else {
-//                                                        month = month.substring(0, 3);
-//                                                    }
                                                 }
-
+                                                count++;
+                                                displayMessages(two_events[0], count, event, temp);
+                                                two_events[0] = 0;
                                             }
-                                        }
-                                        count++;
-                                        displayMessages(two_events[0], count, event, temp);
-                                        two_events[0] = 0;
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
+                                        };
+                                        ref.addListenerForSingleValueEvent(eventListener);
+
                                     }
-                                };
-                                ref.addListenerForSingleValueEvent(eventListener);
+                                });
+
+                                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
 
                                 return true;
-
                             }
                         });
 

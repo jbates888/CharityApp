@@ -22,6 +22,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.net.Inet4Address;
@@ -42,7 +47,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
-
         userNameTxt = findViewById(R.id.userName_txt);
         adminPwordTxt = findViewById(R.id.adminPword_txt);
         spinner = findViewById(R.id.userdrop);
@@ -75,7 +79,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 }
 
                 FirebaseUser user = mAuth.getCurrentUser();
-
                 if(user != null){
                     UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                             .setDisplayName(type + ": " + userName)
