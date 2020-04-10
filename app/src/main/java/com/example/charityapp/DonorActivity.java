@@ -39,6 +39,7 @@ public class DonorActivity extends AppCompatActivity {
     DatabaseReference ref;
     FirebaseDatabase database;
 
+
     FirebaseAuth mAuth;
 
     @Override
@@ -81,7 +82,6 @@ public class DonorActivity extends AppCompatActivity {
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
-
                                 startActivity(intent);
                             }
                         });
@@ -94,15 +94,19 @@ public class DonorActivity extends AppCompatActivity {
                                 builder.setTitle("Contribute To Event");
                                 builder.setMessage("Would you like to sign up or donate to this event?");
 
-
-
                                 builder.setPositiveButton("Donate", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), DonorEventDetails.class);
-//                                        startActivity(myIntent);
-//                                        return;
-                                        dialog.cancel();
+                                        Intent intent = new Intent(DonorActivity.this, DonorEventDetails.class);
+                                        intent.putExtra("Name", event.getName());
+                                        intent.putExtra("Program", event.getProgram());
+                                        intent.putExtra("Description", event.getDescription());
+                                        intent.putExtra("Date", event.getDate());
+                                        intent.putExtra("Time", event.getTime());
+                                        intent.putExtra("Funds", event.getFunding());
+                                        intent.putExtra("Volunteers", event.getVolunteers());
+                                        intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
+                                        startActivity(intent);
                                     }
                                 });
 
