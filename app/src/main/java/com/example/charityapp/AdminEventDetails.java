@@ -102,4 +102,6 @@ public class AdminEventDetails extends AppCompatActivity {
             }
         });
     }
+
+
 }

@@ -11,4 +11,9 @@
         android:title="@string/donateTxt"
         app:showAsAction="never"></item>
 
+    <item
+        android:id="@+id/ActionHelp"
+        android:title="Help"
+        app:showAsAction="never"></item>
+
 </menu>

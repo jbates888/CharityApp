@@ -225,6 +225,9 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+            case R.id.ActionHelp:
+                startActivity(new Intent(this, HelpActivity.class));
+                return true;
         }
         return true;
     }

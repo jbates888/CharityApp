@@ -238,6 +238,9 @@ public class DonorActivity extends AppCompatActivity {
             case R.id.donate:
                 startActivity(new Intent(this, DonateActivity.class));
                 return true;
+            case R.id.ActionHelp:
+                startActivity(new Intent(this, HelpActivity.class));
+                return true;
         }
         return true;
     }
