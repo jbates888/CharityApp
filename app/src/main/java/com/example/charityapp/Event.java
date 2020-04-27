@@ -1,8 +1,8 @@
 package com.example.charityapp;
 
-import android.widget.Toast;
-
+//this class is for event objects
 public class Event {
+    //declare all event attributes
     private String Name;
     private String Program;
     private String Date;
@@ -13,11 +13,14 @@ public class Event {
     private int VolunteersNeeded;
     private int NumVolunteers;
 
+    //constructor
     public Event() {
 
     }
 
+    //constructor with arguments for events
     public Event(String Name, String Program, String Date, String Time, int Funding, String Description, String Volunteers, int VolunteersNeeded, int NumVols) {
+        //set all attributes
         this.Name = Name;
         this.Program = Program;
         this.Date = Date;
@@ -29,6 +32,7 @@ public class Event {
         this.NumVolunteers = NumVols;
     }
 
+    //getters and setter for all event attributes
     public String getName() {
         return Name;
     }
@@ -93,11 +97,11 @@ public class Event {
         this.VolunteersNeeded = VolunteersNeeded;
     }
 
-    public void setNumVolunteers(int num){
+    public void setNumVolunteers(int num) {
         this.NumVolunteers = num;
     }
 
-    public int getNumVolunteers(){
+    public int getNumVolunteers() {
         return NumVolunteers;
     }
 }

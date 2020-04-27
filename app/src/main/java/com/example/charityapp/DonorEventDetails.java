@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class DonorEventDetails extends AppCompatActivity {
 
     TextView nameTxt;
@@ -46,9 +45,7 @@ public class DonorEventDetails extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextView donateAmount;
     int amount;
-
     boolean bool;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +53,6 @@ public class DonorEventDetails extends AppCompatActivity {
         setContentView(R.layout.activity_donor_event_details);
 
         bool = false;
-
         nameTxt = findViewById(R.id.event_details_title);
         progTxt = findViewById(R.id.event_details_prog);
         descTxt = findViewById(R.id.event_details_desc);
@@ -69,40 +65,47 @@ public class DonorEventDetails extends AppCompatActivity {
         donateBtn = findViewById(R.id.donate_btn);
         donateAmount = findViewById(R.id.donateEditTxt);
 
-
+        //bring in the extras passed into the activity
         Bundle extras = getIntent().getExtras();
-        nameTxt.setText( extras.getString("Name"));
-        progTxt.setText("Program: "  + extras.getString("Program"));
-        descTxt.setText("Description: "  +  extras.getString("Description"));
-        dateTxt.setText("Date: "  +  extras.getString("Date"));
-        timeTxt.setText("Time: "  +  extras.getString("Time"));
-        fundsTxt.setText("Funding: $"  +  extras.getInt("Funds"));
-        volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
-        volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
-        Event event = new Event(extras.getString("Name"), extras.getString("Program"), extras.getString("Date"), extras.getString("Time"), extras.getInt("Funds"),
-                extras.getString("Description"), extras.getString("Volunteers"), extras.getInt("VolunteersNeeded"), extras.getInt("numVolunteers"));
+        //set all the text field values to the extras passed in
+        nameTxt.setText(extras.getString("Name"));
+        progTxt.setText("Program: " + extras.getString("Program"));
+        descTxt.setText("Description: " + extras.getString("Description"));
+        dateTxt.setText("Date: " + extras.getString("Date"));
+        timeTxt.setText("Time: " + extras.getString("Time"));
+        fundsTxt.setText("Funding: $" + extras.getInt("Funds"));
+        volsTxt.setText("Volunteers: " + extras.getString("Volunteers"));
+        volsNeededTxt.setText("Volunteers Needed: " + extras.getInt("VolunteersNeeded", 0));
+        //create an event with the passed in extras
+        Event event = new Event(extras.getString("Name"), extras.getString("Program"), extras.getString("Date"), extras.getString("Time"), extras.getInt("Funds"), extras.getString("Description"), extras.getString("Volunteers"), extras.getInt("VolunteersNeeded"), extras.getInt("numVolunteers"));
 
-
+        //set up reference to the events
         ref = FirebaseDatabase.getInstance().getReference("Events");
+        //set up reference to the data
         dataReference = FirebaseDatabase.getInstance().getReference("Data");
+        //make an auth object for the current user
         mAuth = FirebaseAuth.getInstance();
 
+        //donate button on click
         donateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(isValid(donateAmount.getText().toString())){
+                //if its a valid donation amount set amount to that
+                if (isValid(donateAmount.getText().toString())) {
                     amount = Integer.parseInt(donateAmount.getText().toString());
                 } else {
+                    //if not valid tell the user to enter a valid amount an return
                     Toast.makeText(getApplicationContext(), "Enter a valid amount", Toast.LENGTH_LONG).show();
                     return;
                 }
+                //get the event name
                 String eventname = extras.getString("Name");
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
                 eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                        for (DataSnapshot eventshot : dataSnapshot.getChildren()) {
+                            //set the funding amount in the database to the new value
                             ref.child(eventshot.getKey()).child("funding").setValue(extras.getInt("Funds") + amount);
                         }
                     }
@@ -116,92 +119,61 @@ public class DonorEventDetails extends AppCompatActivity {
                 dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        //update the new data for the admin stats after a new donation
                         int value = dataSnapshot.child("Total").getValue(Integer.class);
                         dataReference.child("Total").setValue(value + amount);
                         int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
                         dataReference.child("curTotal").setValue(value2 + amount);
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         // Code
                     }
                 });
-
                 finish();
+                //send the user to the donor activity and tell them thanks for donating
                 startActivity(new Intent(DonorEventDetails.this, DonorActivity.class));
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
             }
         });
-
+        //volunteer on click
         volunteerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //get the event name
                 String eventname = extras.getString("Name");
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
-
+                //get the current user
                 FirebaseUser user = mAuth.getCurrentUser();
+                //get rid of the donor tag in username
                 String temp = user.getDisplayName().replaceAll("Donor:", "");
-//                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                            Event event = snapshot.getValue(Event.class);
-//
-//                            if(event.getVolunteers().contains(temp)){
-//                                if(event.getDate().equals(extras.getString("Date"))){
-//                                    Toast.makeText(getApplicationContext(), "Overlap!!!", Toast.LENGTH_LONG).show();
-//                                    setBool();
-//                                }
-//                            }
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        // Code
-//                    }
-//                });
 
                 ValueEventListener eventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d("volunteeractivity", "Number of events" + Long.toString(dataSnapshot.getChildrenCount()));
+                        //get children in database
                         Iterable<DataSnapshot> events = dataSnapshot.getChildren();
                         int[] two_events = {0};
                         int count = 0;
+                        //iterate through each child
                         for (DataSnapshot s : events) {
-
-                            if(event.getName().equals(s.getKey())){
+                            //if the event name matched the key ingore it
+                            if (event.getName().equals(s.getKey())) {
                                 //do nothing
                             } else {
                                 Log.d("volunteeractivity", "Event name" + s.getKey());
-
-                                //two_events[0] = 1;
                                 Log.d("volunteeractivity", "Date after test" + two_events[0]);
                                 String month = s.child("date").getValue(String.class);
                                 String[] compareevent = month.split("\\/");
-                                //Log.d("split the date", comapareevent[2]);
                                 String[] eventdetails = event.getDate().split("\\/");
-//                                                //String ddate = date.substring(0, 2);
-//                                                if (month.charAt(2) == '/') {
-//                                                    month = month.substring(0, 2);
-//                                                } else {
-//                                                    month = month.substring(0, 3);
-//                                                }
-//                                                //Log.d("volunteeractivity", "Date after test" + date);
-//                                                String eventmonth = event.getDate();
-//                                                if (eventmonth.charAt(2) == '/') {
-//                                                    eventmonth = eventmonth.substring(0, 2);
-//                                                } else {
-//                                                    eventmonth = eventmonth.substring(0, 3);
-//                                                }
-////                                                Log.d("volunteeractivity", "Event date " + eventdate);
-////                                                Log.d("volunteeractivity", "Date date " + date);
 
-                                if(eventdetails[2].equals(compareevent[2])){
-                                    if(eventdetails[0].equals(compareevent[0])){
-                                        if(eventdetails[1].equals(compareevent[1])){
+                                if (eventdetails[2].equals(compareevent[2])) {
+                                    if (eventdetails[0].equals(compareevent[0])) {
+                                        if (eventdetails[1].equals(compareevent[1])) {
                                             String vols = s.child("volunteers").getValue(String.class);
-                                            if(vols.contains(temp)){
+                                            if (vols.contains(temp)) {
                                                 String[] comparetimes = s.child("time").getValue(String.class).split("-");
                                                 Log.d("times", comparetimes[0]);
                                                 String[] times = event.getTime().split("-");
@@ -209,7 +181,7 @@ public class DonorEventDetails extends AppCompatActivity {
                                                 Date start2 = null;
                                                 Date end1 = null;
                                                 Date end2 = null;
-                                                for(int i = 0; i < comparetimes.length; i++){
+                                                for (int i = 0; i < comparetimes.length; i++) {
                                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
                                                     Date date = null;
@@ -219,11 +191,11 @@ public class DonorEventDetails extends AppCompatActivity {
                                                         e.printStackTrace();
                                                     }
                                                     comparetimes[i] = mformat.format(date);
-                                                    if(i == 0) start1 = date;
-                                                    if(i == 1) end1 = date;
+                                                    if (i == 0) start1 = date;
+                                                    if (i == 1) end1 = date;
                                                 }
 
-                                                for(int i = 0; i < times.length; i++){
+                                                for (int i = 0; i < times.length; i++) {
                                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
                                                     Date date = null;
@@ -233,10 +205,10 @@ public class DonorEventDetails extends AppCompatActivity {
                                                         e.printStackTrace();
                                                     }
                                                     times[i] = mformat.format(date);
-                                                    if(i == 0) start2 = date;
-                                                    if(i == 1) end2 = date;
+                                                    if (i == 0) start2 = date;
+                                                    if (i == 1) end2 = date;
                                                 }
-                                                if((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))){
+                                                if ((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))) {
                                                     two_events[0] = 1;
                                                 }
                                             }
@@ -269,18 +241,18 @@ public class DonorEventDetails extends AppCompatActivity {
 
     }
 
-    private boolean isValid(String value){
-        try{
+    private boolean isValid(String value) {
+        try {
             Integer.parseInt(value);
             return true;
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
 
     }
 
-    private void displayMessages(int equals, int count, Event event, String temp){
-        if(count <= 1){
+    private void displayMessages(int equals, int count, Event event, String temp) {
+        if (count <= 1) {
             if (equals == 1) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(DonorEventDetails.this);
                 builder.setCancelable(true);
@@ -371,22 +343,25 @@ public class DonorEventDetails extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
+                //pop up ok button
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //get the event name
                         String eventname = event.getName();
                         Query eventquery = ref.orderByChild("name").equalTo(eventname);
                         eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot eventshot : dataSnapshot.getChildren()) {
-                                    //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
+                                    //if there are no volunteers yet dont add a comma to the list
                                     if (event.getVolunteers().length() == 0) {
                                         ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp);
                                     } else {
+                                        //otherwise add a comma for formatting of the list
                                         ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + "," + temp);
                                     }
+                                    //decrement needed volunteers
                                     ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() - 1);
                                 }
                             }
@@ -396,7 +371,6 @@ public class DonorEventDetails extends AppCompatActivity {
 
                             }
                         });
-
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -405,9 +379,5 @@ public class DonorEventDetails extends AppCompatActivity {
             }
         }
     }
-
-//    private void setBool(){
-//        bool = true;
-//    }
 
 }

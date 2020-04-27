@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 public class GuestEventDetails extends AppCompatActivity {
 
+    //declare all the text views
     TextView nameTxt;
     TextView progTxt;
     TextView descTxt;
@@ -19,7 +20,7 @@ public class GuestEventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_event_details);
-
+        //set each view to its id
         nameTxt = findViewById(R.id.event_details_title);
         progTxt = findViewById(R.id.event_details_prog);
         descTxt = findViewById(R.id.event_details_desc);
@@ -27,8 +28,9 @@ public class GuestEventDetails extends AppCompatActivity {
         timeTxt = findViewById(R.id.event_details_time);
         fundsTxt = findViewById(R.id.event_details_funds);
         volsTxt = findViewById(R.id.event_details_vols);
-
+        //get the extras passed in
         Bundle extras = getIntent().getExtras();
+        //set each text view to its given value
         nameTxt.setText( extras.getString("Name"));
         progTxt.setText("Program: "  + extras.getString("Program"));
         descTxt.setText("Description: "  +  extras.getString("Description"));

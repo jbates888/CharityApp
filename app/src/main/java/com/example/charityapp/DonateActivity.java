@@ -1,6 +1,5 @@
 package com.example.charityapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,8 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+//this class is for unrestricted donations from the donors
 public class DonateActivity extends AppCompatActivity {
 
+    //declare buttons and text views
     Button donateBtn;
     TextView donateAmount;
     int amount;
@@ -29,17 +30,22 @@ public class DonateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
 
+        //set objects to their id
         donateAmount = findViewById(R.id.donateEditTxt);
         donateBtn = findViewById(R.id.donate_btn);
+        //database reference to data
         dataReference = FirebaseDatabase.getInstance().getReference("Data");
 
+        //on click listener for the donate button
         donateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //check if entered amount is valid
                 if(isValid(donateAmount.getText().toString())){
+                    //if it is set amount to it
                     amount = Integer.parseInt(donateAmount.getText().toString());
                 } else {
+                    //otherwise tell user to enter a valid amount
                     Toast.makeText(getApplicationContext(), "Enter a valid amount", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -47,6 +53,7 @@ public class DonateActivity extends AppCompatActivity {
                 dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        //update values in the data section of database for admins to view
                         int value = dataSnapshot.child("Total").getValue(Integer.class);
                         dataReference.child("Total").setValue(value + amount);
                         int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
@@ -58,20 +65,23 @@ public class DonateActivity extends AppCompatActivity {
                     }
                 });
 
+                //finish the activity
                 finish();
+                //send the user back to the donor's main activity and thank them
                 startActivity(new Intent(DonateActivity.this, DonorActivity.class));
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
+    //method for checking users donation amount entered
     private boolean isValid(String value){
+        //if the user entered a positive int return true
         try{
             Integer.parseInt(value);
             return true;
         } catch(NumberFormatException e){
+            //otherwise return false
             return false;
         }
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Payment extends AppCompatActivity {
+    //this class is not currently used
 
     private EditText nameInput, cityInput, stateInput, numberInput, CVVInput;
     private String name, city, state, number, CVV;

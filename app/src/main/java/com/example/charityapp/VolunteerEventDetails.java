@@ -102,22 +102,6 @@ public class VolunteerEventDetails extends AppCompatActivity {
                             String[] compareevent = month.split("\\/");
                             //Log.d("split the date", comapareevent[2]);
                             String[] eventdetails = event.getDate().split("\\/");
-//                                                //String ddate = date.substring(0, 2);
-//                                                if (month.charAt(2) == '/') {
-//                                                    month = month.substring(0, 2);
-//                                                } else {
-//                                                    month = month.substring(0, 3);
-//                                                }
-//                                                //Log.d("volunteeractivity", "Date after test" + date);
-//                                                String eventmonth = event.getDate();
-//                                                if (eventmonth.charAt(2) == '/') {
-//                                                    eventmonth = eventmonth.substring(0, 2);
-//                                                } else {
-//                                                    eventmonth = eventmonth.substring(0, 3);
-//                                                }
-////                                                Log.d("volunteeractivity", "Event date " + eventdate);
-////                                                Log.d("volunteeractivity", "Date date " + date);
-
                             if(eventdetails[2].equals(compareevent[2])){
                                 if(eventdetails[0].equals(compareevent[0])){
                                     if(eventdetails[1].equals(compareevent[1])){
