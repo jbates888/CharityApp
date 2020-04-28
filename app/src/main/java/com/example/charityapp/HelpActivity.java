@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * @description class is where user who click the help button in the menu are sent to
  *
- * @authors
+ * @authors Jack Bates and Felix Estrella
  * @date_created
  * @date_modified
  */

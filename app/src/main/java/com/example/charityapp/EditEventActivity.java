@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * @description activity for admin to edit a event
  *
- * @authors Jack Bates
+ * @authors Jack Bates and Felix Estrella
  * @date_created
  * @date_modified
  */

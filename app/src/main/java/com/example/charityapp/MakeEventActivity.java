@@ -34,7 +34,7 @@ import java.util.Date;
 /**
  * @description activity where admin creates a new event
  *
- * @authors Jack Bates
+ * @authors Jack Bates and Felix Estrella
  * @date_created
  * @date_modified
  */
