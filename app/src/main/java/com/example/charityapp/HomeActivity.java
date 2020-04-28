@@ -27,6 +27,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * @description main activity for admins to view all events
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class HomeActivity extends AppCompatActivity  {
 
     RecyclerView recyclerView;
@@ -37,15 +44,14 @@ public class HomeActivity extends AppCompatActivity  {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        //set up the custom tool bar
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
-
+        //set up the recycle viewer for displaying the events
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //create a database reference for the events
         database = FirebaseDatabase.getInstance();
         ref = FirebaseDatabase.getInstance().getReference("Events");
         dataReference = FirebaseDatabase.getInstance().getReference("Data");
@@ -59,11 +65,13 @@ public class HomeActivity extends AppCompatActivity  {
                 new FirebaseRecyclerAdapter<Event, recycleAdapter>(Event.class, R.layout.row, recycleAdapter.class, ref){
                     protected void populateViewHolder(recycleAdapter holder, Event event, int i){
                         holder.setView(getApplicationContext(), event.getName(), event.getProgram(), event.getDate(), event.getTime());
-
+                        //on click listener for each event in the list
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //create an intent to the detail page of the clicked event
                                 Intent intent = new Intent(HomeActivity.this, AdminEventDetails.class);
+                                //put all the events details in the intent
                                 intent.putExtra("Name", event.getName());
                                 intent.putExtra("Program", event.getProgram());
                                 intent.putExtra("Description", event.getDescription());
@@ -72,17 +80,17 @@ public class HomeActivity extends AppCompatActivity  {
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
-
+                                //start the intent
                                 startActivity(intent);
                             }
                         });
-
+                        //long click listener for each event
                         holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
                             public boolean onLongClick(View v){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                                 builder.setCancelable(true);
                                 builder.setTitle("Admin Options");
-
+                                //create a button for deleting the event
                                 builder.setNegativeButton("Delete Event", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -92,6 +100,7 @@ public class HomeActivity extends AppCompatActivity  {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for(DataSnapshot eventshot: dataSnapshot.getChildren()){
+                                                    //remove the event from the database
                                                     eventshot.getRef().removeValue();
 
                                                 }
@@ -101,10 +110,11 @@ public class HomeActivity extends AppCompatActivity  {
 
                                             }
                                         });
-
+                                        //listens for if a event is delted
                                         dataReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                                //update the admins data
                                                 int value = dataSnapshot.child("numEvents").getValue(Integer.class);
                                                 dataReference.child("numEvents").setValue(value - 1);
                                                 int value2 = dataSnapshot.child("curTotal").getValue(Integer.class);
@@ -117,11 +127,13 @@ public class HomeActivity extends AppCompatActivity  {
                                         });
                                     }
                                 });
-
+                                //add a button for modifying the event
                                 builder.setPositiveButton("Modify Event", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //create an intent to the modify page of the clicked event
                                         Intent intent = new Intent(HomeActivity.this, EditEventActivity.class);
+                                        //put all the events details in the intent
                                         intent.putExtra("Name", event.getName());
                                         intent.putExtra("Program", event.getProgram());
                                         intent.putExtra("Description", event.getDescription());
@@ -130,13 +142,15 @@ public class HomeActivity extends AppCompatActivity  {
                                         intent.putExtra("Funds", event.getFunding());
                                         intent.putExtra("Volunteers", event.getVolunteers());
                                         intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
+                                        //start the intent
                                         startActivity(intent);
                                     }
                                 });
-
+                                //add a canlce button the the pop up
                                 builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //close the pop up
                                         dialog.cancel();
                                     }
                                 });
@@ -151,6 +165,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate the menu in the top right corner of toolbar
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -158,21 +173,27 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //switch statement for when each menu item is selected
         switch (item.getItemId()){
+            //logout button
             case R.id.ActionLogout:
+                //tell user they logged out and sign them out from firebase
                 Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_LONG).show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.ActionCreate:
+                //button for creating a new event
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
             case R.id.ActionAdmin:
+                //button to go to the admin firebase console
                 Intent broswerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://console.firebase.google.com/u/0/project/charity-app-43ea3/authentication/users"));
                 startActivity(broswerIntent);
                 return true;
             case R.id.DataAdmin:
+                //button to view admin details
                 startActivity(new Intent(this, OrgAnalyticsActivity.class));
                 return true;
         }

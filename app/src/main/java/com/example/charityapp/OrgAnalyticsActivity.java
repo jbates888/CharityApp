@@ -14,6 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+/**
+ * @description activity where admins can view the data for the whole charity
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class OrgAnalyticsActivity extends AppCompatActivity {
 
     DatabaseReference ref;
@@ -28,19 +35,20 @@ public class OrgAnalyticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_analytics);
-
+        //set the database references
         database = FirebaseDatabase.getInstance();
         ref = FirebaseDatabase.getInstance().getReference("Data");
-
+        //set elements to their id
         total = findViewById(R.id.totTxt);
         curTotal = findViewById(R.id.curTxt);
         nEvents = findViewById(R.id.eventTxt);
         nTotEvents = findViewById(R.id.totNEventsTxt);
 
-
+        //listens for change to data section of database
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //set the text views to the current values in the database
                 total.setText(dataSnapshot.child("Total").getValue().toString());
                 curTotal.setText(dataSnapshot.child("curTotal").getValue().toString());
                 nEvents.setText(dataSnapshot.child("numEvents").getValue().toString());

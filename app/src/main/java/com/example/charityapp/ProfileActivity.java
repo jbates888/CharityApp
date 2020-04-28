@@ -32,6 +32,13 @@ import java.lang.reflect.Array;
 import java.net.Inet4Address;
 import java.util.ArrayList;
 
+/**
+ * @description
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText userNameTxt, adminPwordTxt;
     Spinner spinner;

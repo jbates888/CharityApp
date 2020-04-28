@@ -23,6 +23,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
+/**
+ * @description
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 public class RegActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText emailTxt;

@@ -8,8 +8,15 @@ import android.widget.ImageView;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * @description class for the splash screen when the app opens
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 public class splash_screen extends AppCompatActivity {
-    //class for the splash screen when the app opens
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

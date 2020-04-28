@@ -34,7 +34,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * @description
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 @SuppressWarnings("serial")
 public class VolunteerActivty extends AppCompatActivity implements Serializable {
 

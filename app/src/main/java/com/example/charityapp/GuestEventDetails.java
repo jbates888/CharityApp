@@ -5,6 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * @description activity where guest user are are sent to view an events details
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class GuestEventDetails extends AppCompatActivity {
 
     //declare all the text views

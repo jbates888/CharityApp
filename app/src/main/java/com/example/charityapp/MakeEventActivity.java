@@ -31,6 +31,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * @description activity where admin creates a new event
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class MakeEventActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebasedatabase;

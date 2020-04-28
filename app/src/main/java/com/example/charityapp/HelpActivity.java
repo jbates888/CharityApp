@@ -4,7 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-//this class is where user who click the help button in the menu are sent to
+/**
+ * @description class is where user who click the help button in the menu are sent to
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
+
 public class HelpActivity extends AppCompatActivity {
 
     @Override

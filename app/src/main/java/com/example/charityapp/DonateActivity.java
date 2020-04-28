@@ -16,9 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-//this class is for unrestricted donations from the donors
+/**
+ * @description class is for unrestricted donations from the donors
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class DonateActivity extends AppCompatActivity {
-
     //declare buttons and text views
     Button donateBtn;
     TextView donateAmount;

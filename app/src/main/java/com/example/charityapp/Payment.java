@@ -10,9 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * @description
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 public class Payment extends AppCompatActivity {
     //this class is not currently used
-
     private EditText nameInput, cityInput, stateInput, numberInput, CVVInput;
     private String name, city, state, number, CVV;
     Button donate_btn;

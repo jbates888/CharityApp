@@ -27,11 +27,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * @description activity for admin to edit a event
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class EditEventActivity extends AppCompatActivity {
 
-    FirebaseDatabase mFirebasedatabase;
     DatabaseReference mRefrence, dataRefrence, EventRefrence;
-
     EditText Program, Description, VolsNeeded;
     TextView dateView, timeView, EditTitleTxt;
     int maxId = 0;
@@ -47,14 +52,13 @@ public class EditEventActivity extends AppCompatActivity {
     double endHours = 0;
     String startAmOrPm = "";
     String endAmOrPm = "";
-
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
-
+        //set all elements to their id
         EditTitleTxt = findViewById(R.id.editTitleTxt);
         Program = findViewById(R.id.program_edit);
         Description = findViewById(R.id.description_edit);
@@ -75,19 +79,19 @@ public class EditEventActivity extends AppCompatActivity {
         dateView.setText(extras.getString("Date"));
         timeView.setText(extras.getString("Time"));
         VolsNeeded.setText("" + extras.getInt("VolunteersNeeded", 0));
-
+        //put ints into an array split at '-'
         String[] arrOfStr = (extras.getString("Time")).split("-", 2);
         startTime = arrOfStr[0];
         EndTime = arrOfStr[1];
-
+        //set database references
         mRefrence = FirebaseDatabase.getInstance().getReference("Events").child(extras.getString("Name"));
         dataRefrence = FirebaseDatabase.getInstance().getReference("Data");
-
+        //on click listener for the time picker for the start time
         TimeStart.setOnClickListener(new View.OnClickListener() {
             Calendar cal = Calendar.getInstance();
+            //set the times to the values the user put in time picker
             int hour = cal.get(Calendar.HOUR);
             int minute = cal.get(Calendar.MINUTE);
-
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -95,6 +99,7 @@ public class EditEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String m;
                         String minString;
+                        //convert the military time to 12 hour time and add AM or PM
                         if (hourOfDay == 0) {
                             hourOfDay += 12;
                             m = "AM";
@@ -111,7 +116,9 @@ public class EditEventActivity extends AppCompatActivity {
                         } else {
                             minString = "" + minute;
                         }
+                        //set the start time the converted time
                         startTime = hourOfDay + ":" + minString + m;
+                        //set the text view to that time
                         timeView.setText(startTime + " - " + EndTime);
                         startAmOrPm = m;
                         startHours = hourOfDay;
@@ -121,12 +128,11 @@ public class EditEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-
+        //on click listener for the end time button
         TimeEnd.setOnClickListener(new View.OnClickListener() {
             Calendar cal = Calendar.getInstance();
             int hour = cal.get(Calendar.HOUR);
             int minute = cal.get(Calendar.MINUTE);
-
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -134,6 +140,7 @@ public class EditEventActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String m;
                         String minString;
+                        //convert the military time to 12 hour time and add AM or PM
                         if (hourOfDay == 0) {
                             hourOfDay += 12;
                             m = "AM";
@@ -150,7 +157,9 @@ public class EditEventActivity extends AppCompatActivity {
                         } else {
                             minString = "" + minute;
                         }
+                        //set the end time the converted time
                         EndTime = hourOfDay + ":" + minString + m;
+                        //set the text view to that time
                         timeView.setText(startTime + " - " + EndTime);
                         endAmOrPm = m;
                         endHours = hourOfDay;
@@ -160,15 +169,16 @@ public class EditEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-
+        //on click listner for the date picker
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
+                //get the day month and year the user put in the date picker
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
-
+                //set the style of the date picker
                 DatePickerDialog dialog = new DatePickerDialog(EditEventActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -189,6 +199,7 @@ public class EditEventActivity extends AppCompatActivity {
                 }
                 Date currdate = new Date();
                 long diff = currdate.getTime() - exitdate.getTime();
+                //make sure the users date is in the future
                 if(diff > 86400000){
                     Toast.makeText(getApplicationContext(), "Please enter future date", Toast.LENGTH_LONG).show();
                 } else{
@@ -197,6 +208,7 @@ public class EditEventActivity extends AppCompatActivity {
             }
         };
 
+        //on click listener for the done button
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,28 +275,6 @@ public class EditEventActivity extends AppCompatActivity {
 
                 }
 
-
-               /**
-                if (startAmOrPm.equals("AM")) {
-                    if (startHours == 12) {
-                        militaryStartTimeDecimal = startHours - 12 + (startMin / 60);
-                    } else {
-                        militaryStartTimeDecimal = startHours + (startMin / 60);
-                    }
-                } else {
-                    militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
-                }
-                if (endAmOrPm.equals("AM")) {
-                    if (endHours == 12) {
-                        militaryEndTimeDecimal = endHours - 12 + (endMin / 60);
-                    } else {
-                        militaryEndTimeDecimal = endHours + (endMin / 60);
-                    }
-                } else {
-                    militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
-                }
-
-                **/
                 if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
                 } else if (!Program.getText().toString().equals("")

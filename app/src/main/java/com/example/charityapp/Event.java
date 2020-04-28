@@ -1,6 +1,13 @@
 package com.example.charityapp;
 
-//this class is for event objects
+/**
+ * @description this class is for creating event objects
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
+
 public class Event {
     //declare all event attributes
     private String Name;

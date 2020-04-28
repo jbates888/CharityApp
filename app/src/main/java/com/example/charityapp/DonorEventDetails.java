@@ -29,6 +29,13 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @description
+ *
+ * @authors
+ * @date_created
+ * @date_modified
+ */
 public class DonorEventDetails extends AppCompatActivity {
 
     TextView nameTxt;
@@ -212,16 +219,8 @@ public class DonorEventDetails extends AppCompatActivity {
                                                     two_events[0] = 1;
                                                 }
                                             }
-//                                                            two_events[0] = 1;
                                         }
                                     }
-//                                                    String day = s.child("date").getValue(String.class);
-//                                                    String eventday = event.getDate();
-//                                                    if (day.charAt(2) == '/') {
-//                                                        day = day.substring(0, 2);
-//                                                    } else {
-//                                                        month = month.substring(0, 3);
-//                                                    }
                                 }
 
                             }
@@ -241,14 +240,16 @@ public class DonorEventDetails extends AppCompatActivity {
 
     }
 
+    //checks if the user entered a valid donation amount
     private boolean isValid(String value) {
+        //if they entered a positive int return true
         try {
             Integer.parseInt(value);
             return true;
         } catch (NumberFormatException e) {
+            //if not return false
             return false;
         }
-
     }
 
     private void displayMessages(int equals, int count, Event event, String temp) {

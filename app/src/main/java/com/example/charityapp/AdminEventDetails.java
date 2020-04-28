@@ -17,11 +17,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-//this class is where admin users are sent after logging in to view all the events
+/**
+ * @description where admin users are sent after logging in to view all the events
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class AdminEventDetails extends AppCompatActivity {
 
-    FirebaseDatabase mFirebasedatabase;
-    DatabaseReference mRefrence, dataRefrence;
+    DatabaseReference dataRefrence;
     TextView nameTxt;
     TextView progTxt;
     TextView descTxt;

@@ -8,6 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @description holder for the recycle viewer on the users main screen which displays all events
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class recycleAdapter extends RecyclerView.ViewHolder{
     //class for the holder which shows the event in the recycle viewer on the main screens for each user
 

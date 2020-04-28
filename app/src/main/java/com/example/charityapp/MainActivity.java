@@ -23,6 +23,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * @description main activity where app starts, the log in page for users
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Fire base authentication object
@@ -75,10 +82,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
+        //edit listener for the password field
         passTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                //check for valid key code
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)){
                     login();
                 }

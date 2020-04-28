@@ -19,8 +19,14 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+/**
+ * @description where guest users are sent after logging in to view all the events
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 
-//this class is where guest users are sent after logging in to view all the events
 public class GuestHomeActivty extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -76,7 +82,7 @@ public class GuestHomeActivty extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //inflate the menu in the tip right corner of toolbar
+        //inflate the menu in the o right corner of toolbar
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.guestmenu, menu);
         return super.onCreateOptionsMenu(menu);

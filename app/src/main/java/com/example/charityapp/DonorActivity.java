@@ -33,13 +33,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @description main screen for donors where they can view all the events
+ *
+ * @authors Jack Bates
+ * @date_created
+ * @date_modified
+ */
 public class DonorActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference ref;
     FirebaseDatabase database;
-
-
     FirebaseAuth mAuth;
 
     @Override
@@ -47,17 +52,17 @@ public class DonorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor);
 
+        //set up the custom tool bar
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
-
+        //set up the recycle viewer for displaying the events
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //create a database reference for the events
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Events");
-
+        //create a user instance for the current user
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -69,11 +74,13 @@ public class DonorActivity extends AppCompatActivity {
                 new FirebaseRecyclerAdapter<Event, recycleAdapter>(Event.class, R.layout.row, recycleAdapter.class, ref){
                     protected void populateViewHolder(recycleAdapter holder, Event event, int i){
                         holder.setView(getApplicationContext(), event.getName(), event.getProgram(), event.getDate(), event.getTime());
-
+                        //on click listener for each event in the list
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //create an intent to the detail page of the clicked event
                                 Intent intent = new Intent(DonorActivity.this, DonorEventDetails.class);
+                                //put all the events details in the intent
                                 intent.putExtra("Name", event.getName());
                                 intent.putExtra("Program", event.getProgram());
                                 intent.putExtra("Description", event.getDescription());
@@ -82,10 +89,11 @@ public class DonorActivity extends AppCompatActivity {
                                 intent.putExtra("Funds", event.getFunding());
                                 intent.putExtra("Volunteers", event.getVolunteers());
                                 intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
+                                //start the intent
                                 startActivity(intent);
                             }
                         });
-
+                        //long click listener for each event
                         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View v) {
@@ -93,11 +101,13 @@ public class DonorActivity extends AppCompatActivity {
                                 builder.setCancelable(true);
                                 builder.setTitle("Contribute To Event");
                                 builder.setMessage("Would you like to sign up or donate to this event?");
-
+                                //make a donate button in the pop up
                                 builder.setPositiveButton("Donate", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //create an intent to the detail page of the clicked event
                                         Intent intent = new Intent(DonorActivity.this, DonorEventDetails.class);
+                                        //put all the events details in the intent
                                         intent.putExtra("Name", event.getName());
                                         intent.putExtra("Program", event.getProgram());
                                         intent.putExtra("Description", event.getDescription());
@@ -106,14 +116,17 @@ public class DonorActivity extends AppCompatActivity {
                                         intent.putExtra("Funds", event.getFunding());
                                         intent.putExtra("Volunteers", event.getVolunteers());
                                         intent.putExtra("VolunteersNeeded", event.getVolunteersNeeded());
+                                        //start the intent
                                         startActivity(intent);
                                     }
                                 });
-
+                                //make a volunteer button in the popup
                                 builder.setNegativeButton("Volunteer", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //get inst of the current user
                                         FirebaseUser user = mAuth.getCurrentUser();
+                                        //remove donor from username
                                         String temp = user.getDisplayName().replaceAll("Donor:", "");
                                         ValueEventListener eventListener = new ValueEventListener() {
                                             @Override
@@ -201,15 +214,15 @@ public class DonorActivity extends AppCompatActivity {
 
                                     }
                                 });
-
+                                //make a cancle button in the pop up
                                 builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //close the pop up when clicked
                                         dialog.cancel();
                                     }
                                 });
                                 builder.show();
-
                                 return true;
                             }
                         });
@@ -221,6 +234,7 @@ public class DonorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate the menu in the top right corner of toolbar
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.donormenu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -228,17 +242,23 @@ public class DonorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //switch statement for when each menu item is selected
         switch (item.getItemId()){
+            //logout button
             case R.id.ActionLogout:
+                //tell user they logged out and sign them out from firebase
                 Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_LONG).show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.donate:
+                //button for unrestricted donation
                 startActivity(new Intent(this, DonateActivity.class));
                 return true;
+            //help button
             case R.id.ActionHelp:
+                //send the user to the help screen
                 startActivity(new Intent(this, HelpActivity.class));
                 return true;
         }
