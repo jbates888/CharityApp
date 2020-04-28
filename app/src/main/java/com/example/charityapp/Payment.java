@@ -11,9 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * @description
+ * Unused page, could not get to link to donation page
+ * FAILED ATTEMPT
  *
- * @authors
+ * @authors Travis Agarano
  * @date_created
  * @date_modified
  */
@@ -34,6 +35,11 @@ public class Payment extends AppCompatActivity {
         cityInput = (EditText) findViewById(R.id.city);
         stateInput = (EditText) findViewById(R.id.state);
 
+        /**
+        * Checks that all fields are filled in correctly
+        *
+        * @param savedInstanceState
+        */
         donate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +77,12 @@ public class Payment extends AppCompatActivity {
         });
     }
 
+     /**
+     * Checks if the string passed in contains only alphabetical characters
+     *
+     * @param str
+     * @return boolean, true if str passed in is a string
+     */
     public boolean isAlpha(String str) {
         char[] letters = str.toCharArray();
 
@@ -83,6 +95,9 @@ public class Payment extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Sends you back to the previous screen after a donation is created
+     */
     private void back() {
         Intent intent = new Intent(this, DonorEventDetails.class);
         startActivity(intent);
