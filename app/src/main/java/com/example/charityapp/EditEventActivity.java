@@ -200,6 +200,71 @@ public class EditEventActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startHours = 0;
+                startMin = 0;
+                String timeHolder = "";
+                for(int i = 0; i < startTime.length(); i++) {
+                    if (startTime.charAt(i) != ':' && startTime.charAt(i) != 'P' && startTime.charAt(i) != 'A' && startTime.charAt(i) != ' ') {
+                        timeHolder = timeHolder + startTime.charAt(i);
+                    }
+                    if (startTime.charAt(i) == ':') {
+                        startHours = Integer.parseInt(timeHolder);
+                        timeHolder = "";
+                    }
+                    if (startTime.charAt(i) == 'P') {
+                        startMin = Integer.parseInt(timeHolder);
+                        if (startHours == 12) {
+                            militaryStartTimeDecimal = startHours + (startMin / 60);
+                        } else {
+                            militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
+                        }
+                        break;
+                    }
+                    if (startTime.charAt(i) == 'A') {
+                        startMin = Integer.parseInt(timeHolder);
+                        if (startHours == 12) {
+                            militaryStartTimeDecimal = startHours - 12 + (startMin / 60);
+                        } else {
+                            militaryStartTimeDecimal = startHours + (startMin / 60);
+                        }
+                        break;
+                    }
+                }
+
+                endHours = 0;
+                endMin = 0;
+                timeHolder = "";
+                for(int i = 0; i < EndTime.length(); i++) {
+                    if (EndTime.charAt(i) != ':' && EndTime.charAt(i) != 'P' && EndTime.charAt(i) != 'A' && EndTime.charAt(i) != ' ') {
+                        timeHolder = timeHolder + EndTime.charAt(i);
+                    }
+                    if (EndTime.charAt(i) == ':') {
+                        endHours = Integer.parseInt(timeHolder);
+                        timeHolder = "";
+                    }
+                    if (EndTime.charAt(i) == 'P') {
+                        endMin = Integer.parseInt(timeHolder);
+                        if (endHours == 12) {
+                            militaryEndTimeDecimal = endHours + (endMin / 60);
+                        } else {
+                            militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
+                        }
+                        break;
+                    }
+                    if (EndTime.charAt(i) == 'A') {
+                        endMin = Integer.parseInt(timeHolder);
+                        if (endHours == 12) {
+                            militaryEndTimeDecimal = endHours - 12 + (endMin / 60);
+                        } else {
+                            militaryEndTimeDecimal = endHours + (endMin / 60);
+                        }
+                        break;
+                    }
+
+                }
+
+
+               /**
                 if (startAmOrPm.equals("AM")) {
                     if (startHours == 12) {
                         militaryStartTimeDecimal = startHours - 12 + (startMin / 60);
@@ -218,6 +283,8 @@ public class EditEventActivity extends AppCompatActivity {
                 } else {
                     militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
                 }
+
+                **/
                 if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
                 } else if (!Program.getText().toString().equals("")

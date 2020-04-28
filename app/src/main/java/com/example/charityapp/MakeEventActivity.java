@@ -211,7 +211,11 @@ public class MakeEventActivity extends AppCompatActivity {
                         militaryStartTimeDecimal = startHours + (startMin / 60);
                     }
                 } else {
-                    militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
+                    if (startHours == 12) {
+                        militaryStartTimeDecimal = startHours + (startMin / 60);
+                    } else {
+                        militaryStartTimeDecimal = startHours + 12 + (startMin / 60);
+                    }
                 }
                 if (endAmOrPm.equals("AM")) {
                     if (endHours == 12) {
@@ -220,7 +224,11 @@ public class MakeEventActivity extends AppCompatActivity {
                         militaryEndTimeDecimal = endHours + (endMin / 60);
                     }
                 } else {
-                    militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
+                    if (endHours == 12) {
+                        militaryEndTimeDecimal = endHours + (endMin / 60);
+                    } else {
+                        militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
+                    }
                 }
 
                 if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
