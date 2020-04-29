@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class recycleAdapter extends RecyclerView.ViewHolder{
     //class for the holder which shows the event in the recycle viewer on the main screens for each user
-
     View view;
 
     public recycleAdapter(@NonNull View itemView) {

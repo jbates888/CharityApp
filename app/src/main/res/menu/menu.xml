@@ -20,4 +20,9 @@
         android:id="@+id/DataAdmin"
         android:title="Organization Analytics"
         app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/VolHours"
+        android:title="Volunteer Data"
+        app:showAsAction="never"></item>
 </menu>

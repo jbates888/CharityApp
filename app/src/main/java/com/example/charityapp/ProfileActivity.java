@@ -44,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     Spinner spinner;
     String type = "";
     FirebaseAuth mAuth;
+    DatabaseReference mRefrence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         userNameTxt = findViewById(R.id.userName_txt);
         adminPwordTxt = findViewById(R.id.adminPword_txt);
         spinner = findViewById(R.id.userdrop);
+        mRefrence = FirebaseDatabase.getInstance().getReference("VolHours");
 
         spinner.setOnItemSelectedListener(this);
 
@@ -105,6 +107,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                         startActivity(intent);
                                     } else if (type.equals("Volunteer")){
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
+                                        Volunteer v = new Volunteer();
+                                        v.setName(user.getDisplayName());
+                                        v.setHours(0);
+                                        mRefrence.child(v.getName()).setValue(v);
                                         startActivity(intent);
                                     }
                                 }

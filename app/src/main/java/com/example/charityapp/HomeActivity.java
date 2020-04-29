@@ -196,6 +196,9 @@ public class HomeActivity extends AppCompatActivity  {
                 //button to view admin details
                 startActivity(new Intent(this, OrgAnalyticsActivity.class));
                 return true;
+            case R.id.VolHours:
+                startActivity(new Intent(this, VolunteerHours.class));
+                return true;
         }
         return true;
     }

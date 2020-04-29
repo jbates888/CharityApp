@@ -46,6 +46,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
     TextView volsNeededTxt;
     Button volunteerBtn;
     DatabaseReference ref;
+    DatabaseReference vol;
     FirebaseAuth mAuth;
 
     @Override
@@ -88,6 +89,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 String temp = user.getDisplayName().replaceAll("Volunteer:", "");
+
 
             ValueEventListener eventListener = new ValueEventListener() {
                 @Override
@@ -167,7 +169,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         }
                     }
                     count++;
-                    displayMessages(two_events[0], count, event, temp);
+                    displayMessages(two_events[0], count, event, temp, user);
                     two_events[0] = 0;
                 }
 
@@ -181,7 +183,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
     }
 
-    private void displayMessages(int equals, int count, Event event, String temp){
+    private void displayMessages(int equals, int count, Event event, String temp, FirebaseUser user){
         if(count <= 1){
             if (equals == 1) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
@@ -257,6 +259,9 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
                     }
+
+
+
                 });
                 builder.show();
                 //if they are not signed up, ask if they would like to
@@ -292,6 +297,8 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 }
                             }
 
+
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -299,6 +306,48 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         });
 
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
+
+                        vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName()).child("hours");
+                        vol.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int hours = dataSnapshot.getValue(Integer.class);
+                                String[] comparetimes = event.getTime().split("-");
+                                Log.d("times", comparetimes[0]);
+                                String[] times = event.getTime().split("-");
+                                Date start1 = null;
+                                Date end1 = null;
+
+                                for(int i = 0; i < comparetimes.length; i++){
+                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                    Date date = null;
+                                    try {
+                                        date = oldformat.parse(comparetimes[i]);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    comparetimes[i] = mformat.format(date);
+                                    if(i == 0) start1 = date;
+                                    if(i == 1) end1 = date;
+                                }
+
+                                long start = start1.getTime();
+                                long end = end1.getTime();
+                                long result = end - start;
+                                result = result / 3600000;
+
+                                vol.setValue(result);
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
                 builder.show();
