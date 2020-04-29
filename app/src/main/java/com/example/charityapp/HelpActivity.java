@@ -10,7 +10,7 @@ import com.github.barteksc.pdfviewer.PDFView;
  * @description This is the class where it takes users who click on the help button. This class
  * will open a pdf file for them to view which is the User Manual.
  *
- * @authors Felix Estrella
+ * @authors Felix Estrella and Jack Bates
  * @date_created 04/28/20
  * @date_modified 04/29/20
  */
