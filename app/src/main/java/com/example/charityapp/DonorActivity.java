@@ -43,7 +43,7 @@ import java.util.Date;
 public class DonorActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    DatabaseReference ref;
+    DatabaseReference ref, vol;
     FirebaseDatabase database;
     FirebaseAuth mAuth;
 
@@ -202,7 +202,7 @@ public class DonorActivity extends AppCompatActivity {
                                                     }
                                                 }
                                                 count++;
-                                                displayMessages(two_events[0], count, event, temp);
+                                                displayMessages(two_events[0], count, event, temp, user);
                                                 two_events[0] = 0;
                                             }
 
@@ -265,7 +265,7 @@ public class DonorActivity extends AppCompatActivity {
         return true;
     }
 
-    private void displayMessages(int equals, int count, Event event, String temp){
+    private void displayMessages(int equals, int count, Event event, String temp, FirebaseUser user){
         if(count <= 1){
             if (equals == 1) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(DonorActivity.this);
@@ -340,6 +340,47 @@ public class DonorActivity extends AppCompatActivity {
                             }
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
+
+                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("hours");
+                        vol.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int hours = dataSnapshot.getValue(Integer.class);
+                                String[] comparetimes = event.getTime().split("-");
+                                Log.d("times", comparetimes[0]);
+                                String[] times = event.getTime().split("-");
+                                Date start1 = null;
+                                Date end1 = null;
+
+                                for(int i = 0; i < comparetimes.length; i++){
+                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                    Date date = null;
+                                    try {
+                                        date = oldformat.parse(comparetimes[i]);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    comparetimes[i] = mformat.format(date);
+                                    if(i == 0) start1 = date;
+                                    if(i == 1) end1 = date;
+                                }
+
+                                long start = start1.getTime();
+                                long end = end1.getTime();
+                                long result = end - start;
+                                result = result / 3600000;
+                                hours  -= result;
+
+                                vol.setValue(hours);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
                 builder.show();
@@ -383,6 +424,47 @@ public class DonorActivity extends AppCompatActivity {
                         });
 
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
+
+                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("hours");
+                        vol.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int hours = dataSnapshot.getValue(Integer.class);
+                                String[] comparetimes = event.getTime().split("-");
+                                Log.d("times", comparetimes[0]);
+                                String[] times = event.getTime().split("-");
+                                Date start1 = null;
+                                Date end1 = null;
+
+                                for(int i = 0; i < comparetimes.length; i++){
+                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                    Date date = null;
+                                    try {
+                                        date = oldformat.parse(comparetimes[i]);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    comparetimes[i] = mformat.format(date);
+                                    if(i == 0) start1 = date;
+                                    if(i == 1) end1 = date;
+                                }
+
+                                long start = start1.getTime();
+                                long end = end1.getTime();
+                                long result = end - start;
+                                result = result / 3600000;
+                                hours  += result;
+
+                                vol.setValue(hours);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
                 builder.show();

@@ -28,6 +28,7 @@
         <activity android:name=".VolunteerActivty" />
         <activity android:name=".GuestHomeActivty" />
         <activity android:name=".VolunteerHours" />
+        <activity android:name=".DonorHours_Donations"/>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegActivity" />
         <activity android:name=".HomeActivity" />

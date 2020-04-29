@@ -11,14 +11,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="96dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/volname_txt"
+            android:id="@+id/donorname_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="96dp"
             android:hint="Name"
             android:textSize="24sp"
@@ -27,22 +28,35 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.363" />
+            app:layout_constraintVertical_bias="0.25" />
 
         <TextView
-            android:id="@+id/hours_txt"
+            android:id="@+id/donorhours_txt"
             android:layout_width="129dp"
             android:layout_height="25dp"
             android:layout_margin="10dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
             android:hint="Program"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.76"
+            app:layout_constraintHorizontal_bias="0.746"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.468" />
+            app:layout_constraintTop_toBottomOf="@+id/name_txt" />
+
+        <TextView
+            android:id="@+id/donations_txt"
+            android:layout_width="158dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/donorhours_txt"
+            app:layout_constraintHorizontal_bias="0.138"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donorname_txt"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

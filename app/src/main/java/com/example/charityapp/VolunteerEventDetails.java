@@ -303,6 +303,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
                             }
                         });
+                        startActivity(new Intent(VolunteerEventDetails.this, VolunteerActivty.class));
                     }
 
 
@@ -392,6 +393,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
                             }
                         });
+                        startActivity(new Intent(VolunteerEventDetails.this, VolunteerActivty.class));
                     }
                 });
                 builder.show();

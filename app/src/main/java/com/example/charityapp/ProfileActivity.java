@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     Spinner spinner;
     String type = "";
     FirebaseAuth mAuth;
-    DatabaseReference mRefrence;
+    DatabaseReference mRefrence, dRefrence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         adminPwordTxt = findViewById(R.id.adminPword_txt);
         spinner = findViewById(R.id.userdrop);
         mRefrence = FirebaseDatabase.getInstance().getReference("VolHours");
+        dRefrence = FirebaseDatabase.getInstance().getReference("DonorDetails");
 
         spinner.setOnItemSelectedListener(this);
 
@@ -104,6 +105,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                         startActivity(intent);
                                     } else if (type.equals("Donor")){
                                         intent = new Intent(ProfileActivity.this, DonorActivity.class);
+                                        Donor d = new Donor();
+                                        d.setName(user.getDisplayName());
+                                        d.setHours(0);
+                                        d.setDonated(0);
+                                        dRefrence.child(d.getName()).setValue(d);
                                         startActivity(intent);
                                     } else if (type.equals("Volunteer")){
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);

@@ -1,5 +1,6 @@
 package com.example.charityapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +31,8 @@ public class DonateActivity extends AppCompatActivity {
     Button donateBtn;
     TextView donateAmount;
     int amount;
-    DatabaseReference dataReference;
+    DatabaseReference dataReference, vol;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class DonateActivity extends AppCompatActivity {
         donateBtn = findViewById(R.id.donate_btn);
         //database reference to data
         dataReference = FirebaseDatabase.getInstance().getReference("Data");
+        mAuth = FirebaseAuth.getInstance();
 
         //on click listener for the donate button
         donateBtn.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +80,22 @@ public class DonateActivity extends AppCompatActivity {
                 //send the user back to the donor's main activity and thank them
                 startActivity(new Intent(DonateActivity.this, DonorActivity.class));
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
+
+                FirebaseUser user = mAuth.getCurrentUser();
+                vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("donated");
+                vol.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int donated = dataSnapshot.getValue(Integer.class);
+                        donated += amount;
+                        vol.setValue(donated);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
     }

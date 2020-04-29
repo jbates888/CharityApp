@@ -187,6 +187,9 @@ public class HomeActivity extends AppCompatActivity  {
                 //button for creating a new event
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
+            case R.id.Datadonor:
+                startActivity(new Intent(this, DonorHours_Donations.class));
+                return true;
             case R.id.ActionAdmin:
                 //button to go to the admin firebase console
                 Intent broswerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://console.firebase.google.com/u/0/project/charity-app-43ea3/authentication/users"));
@@ -198,6 +201,9 @@ public class HomeActivity extends AppCompatActivity  {
                 return true;
             case R.id.VolHours:
                 startActivity(new Intent(this, VolunteerHours.class));
+                return true;
+            case R.id.ActionHelp:
+                startActivity(new Intent(this, HelpActivity.class));
                 return true;
         }
         return true;
