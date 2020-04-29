@@ -258,6 +258,51 @@ public class VolunteerEventDetails extends AppCompatActivity {
                             }
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
+
+                        vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName()).child("hours");
+                        vol.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int hours = dataSnapshot.getValue(Integer.class);
+                                String[] comparetimes = event.getTime().split("-");
+                                Log.d("times", comparetimes[0]);
+                                String[] times = event.getTime().split("-");
+                                Date start1 = null;
+                                Date end1 = null;
+
+                                for(int i = 0; i < comparetimes.length; i++){
+                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+                                    Date date = null;
+                                    try {
+                                        date = oldformat.parse(comparetimes[i]);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    comparetimes[i] = mformat.format(date);
+                                    if(i == 0) start1 = date;
+                                    if(i == 1) end1 = date;
+                                }
+
+                                long start = start1.getTime();
+                                long end = end1.getTime();
+                                long result = end - start;
+                                result = result / 3600000;
+                                hours  -= result;
+                                if(hours < 0){
+                                    hours = 0;
+                                }
+                                vol.setValue(hours);
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
 
@@ -336,10 +381,9 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 long end = end1.getTime();
                                 long result = end - start;
                                 result = result / 3600000;
+                                hours  += result;
 
-                                vol.setValue(result);
-
-
+                                vol.setValue(hours);
 
                             }
 
