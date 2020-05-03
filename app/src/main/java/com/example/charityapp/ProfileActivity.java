@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                     } else if (type.equals("Donor")){
                                         intent = new Intent(ProfileActivity.this, DonorActivity.class);
                                         Donor d = new Donor();
-                                        d.setName(user.getDisplayName());
+                                        d.setName(user.getDisplayName().replace("Donor:", ""));
                                         d.setHours(0);
                                         d.setDonated(0);
                                         dRefrence.child(d.getName()).setValue(d);
@@ -114,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                                     } else if (type.equals("Volunteer")){
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
                                         Volunteer v = new Volunteer();
-                                        v.setName(user.getDisplayName());
+                                        v.setName(user.getDisplayName().replace("Volunteer:", ""));
                                         v.setHours(0);
                                         mRefrence.child(v.getName()).setValue(v);
                                         startActivity(intent);

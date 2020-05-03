@@ -341,7 +341,7 @@ public class DonorActivity extends AppCompatActivity {
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
 
-                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("hours");
+                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName().replace("Donor:", "")).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -425,7 +425,7 @@ public class DonorActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
 
-                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("hours");
+                        vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName().replace("Donor:", "")).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

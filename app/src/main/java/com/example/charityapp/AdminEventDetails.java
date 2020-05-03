@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @description where admin users are sent after logging in to view all the events
@@ -36,7 +45,7 @@ public class AdminEventDetails extends AppCompatActivity {
     TextView volsTxt;
     TextView volsNeededTxt;
     Button deleteBtn;
-    DatabaseReference ref;
+    DatabaseReference ref, vol, don;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +86,61 @@ public class AdminEventDetails extends AppCompatActivity {
             public void onClick(View v) {
                 //get the events name
                 String eventname = extras.getString("Name");
+                String[] names = extras.getString("Volunteers").replaceAll(" ", "").split(", ");
+                List<String> people = Arrays.asList(names);
+
+                //vol = FirebaseDatabase.getInstance().getReference("VolHours");
+//                for(String f : people){
+//                    Log.d("Person", f);
+//                    vol = FirebaseDatabase.getInstance().getReference("VolHours");
+//                    vol.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            if(dataSnapshot.hasChild(f)){
+//                                int hours = dataSnapshot.child(f).child("hours").getValue(Integer.class);
+//                                String[] comparetimes = extras.getString("Time").split("-");
+//                                Log.d("times", comparetimes[0]);
+//                                //String[] times = event.getTime().split("-");
+//                                Date start1 = null;
+//                                Date end1 = null;
+//
+//                                for(int i = 0; i < comparetimes.length; i++){
+//                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
+//                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
+//                                    Date date = null;
+//                                    try {
+//                                        date = oldformat.parse(comparetimes[i]);
+//                                    } catch (ParseException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    comparetimes[i] = mformat.format(date);
+//                                    if(i == 0) start1 = date;
+//                                    if(i == 1) end1 = date;
+//                                }
+//
+//                                long start = start1.getTime();
+//                                long end = end1.getTime();
+//                                long result = end - start;
+//                                result = result / 3600000;
+//                                hours  -= result;
+//                                if(hours < 0){
+//                                    hours = 0;
+//                                }
+//                                vol = FirebaseDatabase.getInstance().getReference("VolHours").child(f).child("hours");
+//                                vol.setValue(hours);
+//
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    vol = null;
+//                }
+
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
                 eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

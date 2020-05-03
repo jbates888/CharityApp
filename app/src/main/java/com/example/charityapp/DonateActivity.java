@@ -82,7 +82,7 @@ public class DonateActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
 
                 FirebaseUser user = mAuth.getCurrentUser();
-                vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName()).child("donated");
+                vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName().replace("Donor:", "")).child("donated");
                 vol.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
