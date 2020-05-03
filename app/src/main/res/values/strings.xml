@@ -14,7 +14,6 @@
     <string name="logoutTxt">Logout</string>
     <string name="showtxt">Show</string>
     <string name="hidetxt">Hide</string>
-
     <string name="createTxt">Create an Event</string>
     <string name="nameTxt">Event Name</string>
     <string name="programTxt">Event Program</string>
@@ -23,12 +22,10 @@
     <string name="descriptionTxt">Description</string>
     <string name="createBtnTxt">Create</string>
     <string name="cancelBtnTxt">Cancel</string>
-
     <string name="deleteTxt">Delete Event</string>
     <string name="donateAmountTxt">Enter donation amount</string>
     <string name="donateTxt">Donate</string>
     <string name="volunteerTxt">Volunteer</string>
-
     <string name="card_name">Full name on card</string>
     <string name="card_number">Card Number</string>
     <string name="card_CVV">CVV</string>
@@ -39,17 +36,13 @@
     <string name="SelectDate">Select Date</string>
     <string name="startTime">Start</string>
     <string name="stopTime">End</string>
-
     <string name="analytics">Analytics</string>
     <string name="totalTxt">Total Funds Raised: $</string>
     <string name="curtotalTxt">Current Funds Raised: $</string>
     <string name="curtotalEventsTxt">Current Number of Events: </string>
     <string name="eventsTxt">Total Number Events Held: </string>
-
     <string name="accountDetailsTxt">Admin Account Details</string>
-
     <string name="unResDonTxt">Make an Unrestricted Donation</string>
-
     <string name="editEventTxt">Edit Event</string>
 
 
