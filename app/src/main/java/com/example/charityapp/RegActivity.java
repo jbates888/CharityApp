@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 /**
  * @description
  *
- * @authors
+ * @authors AJ Thut, Jack Bates, Felix Estrella
  * @date_created
  * @date_modified
  */
@@ -78,7 +78,7 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
                 return true;
             }
         });
-
+        //register user
         passTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -108,6 +108,7 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void registerUser() {
+        //get email and password the user enterd
         String email = emailTxt.getText().toString();
         String password = passTxt.getText().toString();
 
@@ -123,15 +124,18 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         progressBar.setVisibility(View.VISIBLE);
+        //create user in database
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
+                    //go to profile activity if signed up
                     finish();
                     Intent intent = new Intent(RegActivity.this, ProfileActivity.class);
                     startActivity(intent);
                 }else{
+                    //checking if email exits or if another error occurred
                     if(task.getException() instanceof FirebaseAuthUserCollisionException){
                         Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_LONG).show();
                     } else{

@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 /**
  * @description main activity where app starts, the log in page for users
  *
- * @authors Jack Bates and Felix Estrella
+ * @authors Jack Bates, Felix Estrella, AJ Thut
  * @date_created
  * @date_modified
  */

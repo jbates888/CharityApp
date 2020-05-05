@@ -1,13 +1,13 @@
 package com.example.charityapp;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+/**
+ * Adds data for the layout when admin views all of the donors in the system
+ */
 
 public class DonorAdapter extends RecyclerView.ViewHolder{
     View view;
@@ -23,7 +23,7 @@ public class DonorAdapter extends RecyclerView.ViewHolder{
         TextView nameTxt = view.findViewById(R.id.donorname_txt);
         TextView hoursTxt = view.findViewById(R.id.donorhours_txt);
         TextView donatetxt = view.findViewById(R.id.donations_txt);
-
+        //set the hours and total donations for each donor
         nameTxt.setText(name);
         hoursTxt.setText("Total Hours: " + hours);
         donatetxt.setText("Total Donations: $" + amount);

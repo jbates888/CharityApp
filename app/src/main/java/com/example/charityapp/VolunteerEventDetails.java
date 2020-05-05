@@ -28,9 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @description
+ * @description Displays event details to user, also allows them to sign up for event
  *
- * @authors
+ * @authors AJ Thut, Jack Bates, Felix Estrella
  * @date_created
  * @date_modified
  */
@@ -63,7 +63,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
         volsTxt = findViewById(R.id.event_details_vols);
         volsNeededTxt = findViewById(R.id.event_details_volsNeeded);
         volunteerBtn = findViewById(R.id.volBtn);
-
+        //getting all info for event from main screen for volunteers
         Bundle extras = getIntent().getExtras();
         nameTxt.setText( extras.getString("Name"));
         progTxt.setText("Program: "  + extras.getString("Program"));
@@ -73,13 +73,14 @@ public class VolunteerEventDetails extends AppCompatActivity {
         fundsTxt.setText("Funding: $"  +  extras.getInt("Funds", 0));
         volsTxt.setText("Volunteers: "  +  extras.getString("Volunteers"));
         volsNeededTxt.setText("Volunteers Needed: "  +  extras.getInt("VolunteersNeeded", 0));
+        //create a new event for simplicity
         Event event = new Event(extras.getString("Name"), extras.getString("Program"), extras.getString("Date"), extras.getString("Time"), extras.getInt("Funds"),
                 extras.getString("Description"), extras.getString("Volunteers"), extras.getInt("VolunteersNeeded"), extras.getInt("numVolunteers"));
 
         ref = FirebaseDatabase.getInstance().getReference("Events");
         mAuth = FirebaseAuth.getInstance();
 
-
+        //when user clicks on volunteer button
         volunteerBtn.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
@@ -103,26 +104,23 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         if(event.getName().equals(s.getKey())){
                             //do nothing
                         } else {
-                            Log.d("volunteeractivity", "Event name" + s.getKey());
 
-                            //two_events[0] = 1;
-                            Log.d("volunteeractivity", "Date after test" + two_events[0]);
                             String month = s.child("date").getValue(String.class);
                             String[] compareevent = month.split("\\/");
-                            //Log.d("split the date", comapareevent[2]);
                             String[] eventdetails = event.getDate().split("\\/");
+                            //check if the two events overlap, check year, month, date, then time
                             if(eventdetails[2].equals(compareevent[2])){
                                 if(eventdetails[0].equals(compareevent[0])){
                                     if(eventdetails[1].equals(compareevent[1])){
                                         String vols = s.child("volunteers").getValue(String.class);
                                         if(vols.contains(temp)){
                                             String[] comparetimes = s.child("time").getValue(String.class).split("-");
-                                            Log.d("times", comparetimes[0]);
                                             String[] times = event.getTime().split("-");
                                             Date start1 = null;
                                             Date start2 = null;
                                             Date end1 = null;
                                             Date end2 = null;
+                                            //get time for event into format for date object
                                             for(int i = 0; i < comparetimes.length; i++){
                                                 SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                 SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -136,7 +134,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                                 if(i == 0) start1 = date;
                                                 if(i == 1) end1 = date;
                                             }
-
+                                            //get time for other event into format for date object
                                             for(int i = 0; i < times.length; i++){
                                                 SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                 SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -150,20 +148,14 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                                 if(i == 0) start2 = date;
                                                 if(i == 1) end2 = date;
                                             }
+                                            //check if the times overlap
                                             if((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))){
                                                 two_events[0] = 1;
                                             }
                                         }
-//                                                            two_events[0] = 1;
                                     }
                                 }
-//                                                    String day = s.child("date").getValue(String.class);
-//                                                    String eventday = event.getDate();
-//                                                    if (day.charAt(2) == '/') {
-//                                                        day = day.substring(0, 2);
-//                                                    } else {
-//                                                        month = month.substring(0, 3);
-//                                                    }
+
                             }
 
                         }
@@ -183,8 +175,17 @@ public class VolunteerEventDetails extends AppCompatActivity {
 
     }
 
+    /**
+     * Display correct message to user when they volunteer for the event
+     * @param equals
+     * @param count
+     * @param event
+     * @param temp
+     * @param user
+     */
     private void displayMessages(int equals, int count, Event event, String temp, FirebaseUser user){
         if(count <= 1){
+            //if user is already volunteering for event at the same time
             if (equals == 1) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
                 builder.setCancelable(true);
@@ -198,7 +199,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                     }
                 });
                 builder.show();
-                //System.out.println(two_events[0]);
+                //if event doesn't need anymore volunteers
             } else if (event.getVolunteersNeeded() <= 0 && !event.getVolunteers().contains(temp)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
                 builder.setCancelable(true);
@@ -212,6 +213,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                     }
                 });
                 builder.show();
+                //if user wants to cancel volunteering for the event
             } else if (event.getVolunteers().contains(temp)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerEventDetails.this);
                 builder.setCancelable(true);
@@ -233,6 +235,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //remove user's name for volunteer list
                                 for (DataSnapshot eventshot : dataSnapshot.getChildren()) {
                                     String original = event.getVolunteers();
                                     String newVolList;
@@ -245,7 +248,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                     }
 
                                     ref.child(eventshot.getKey()).child("volunteers").setValue(newVolList);
-                                    //get the number of volunteers and add one
+                                    //get the number of volunteers and subtract one
                                     int val = event.getNumVolunteers() - 1;
                                     ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() + 1);
                                     ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
@@ -258,10 +261,11 @@ public class VolunteerEventDetails extends AppCompatActivity {
                             }
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
-
+                        //getting reference to volunteer from database
                         vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName().replace("Volunteer:", "")).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
+                            //getting length of the event
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 int hours = dataSnapshot.getValue(Integer.class);
                                 String[] comparetimes = event.getTime().split("-");
@@ -269,7 +273,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 String[] times = event.getTime().split("-");
                                 Date start1 = null;
                                 Date end1 = null;
-
+                                //getting time into format for date object
                                 for(int i = 0; i < comparetimes.length; i++){
                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -283,7 +287,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                     if(i == 0) start1 = date;
                                     if(i == 1) end1 = date;
                                 }
-
+                                //get length of event in hours, increment hours volunteered in database for user
                                 long start = start1.getTime();
                                 long end = end1.getTime();
                                 long result = end - start;
@@ -328,9 +332,9 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         Query eventquery = ref.orderByChild("name").equalTo(eventname);
                         eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
+                            //removing user's name for volunteer list
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot eventshot : dataSnapshot.getChildren()) {
-                                    //Toast.makeText(getApplicationContext(), eventshot.getKey(), Toast.LENGTH_LONG).show();
                                     if (event.getVolunteers().length() == 0) {
                                         ref.child(eventshot.getKey()).child("volunteers").setValue(event.getVolunteers() + temp);
                                     } else {
@@ -349,10 +353,11 @@ public class VolunteerEventDetails extends AppCompatActivity {
                         });
 
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
-
+                        //getting reference of user in the database
                         vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName().replace("Volunteer:", "") ).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
+                            //getting length of the event
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 int hours = dataSnapshot.getValue(Integer.class);
                                 String[] comparetimes = event.getTime().split("-");
@@ -360,7 +365,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                 String[] times = event.getTime().split("-");
                                 Date start1 = null;
                                 Date end1 = null;
-
+                                //getting event time into format for date object
                                 for(int i = 0; i < comparetimes.length; i++){
                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -374,7 +379,7 @@ public class VolunteerEventDetails extends AppCompatActivity {
                                     if(i == 0) start1 = date;
                                     if(i == 1) end1 = date;
                                 }
-
+                                //get length of event in hours, decrement hours volunteered for user in database
                                 long start = start1.getTime();
                                 long end = end1.getTime();
                                 long result = end - start;

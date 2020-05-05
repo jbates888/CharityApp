@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * @description main activity for admins to view all events
  *
- * @authors Jack Bates
+ * @authors Jack Bates, AJ Thut
  * @date_created
  * @date_modified
  */
@@ -188,6 +188,7 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(new Intent(this, MakeEventActivity.class));
                 return true;
             case R.id.Datadonor:
+                //view all donors/data in system
                 startActivity(new Intent(this, DonorHours_Donations.class));
                 return true;
             case R.id.ActionAdmin:
@@ -200,9 +201,11 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(new Intent(this, OrgAnalyticsActivity.class));
                 return true;
             case R.id.VolHours:
+                //view all of volunteers/data in system
                 startActivity(new Intent(this, VolunteerHours.class));
                 return true;
             case R.id.ActionHelp:
+                //view help page
                 startActivity(new Intent(this, HelpActivity.class));
                 return true;
         }

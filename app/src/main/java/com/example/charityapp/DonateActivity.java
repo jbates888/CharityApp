@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * @description class is for unrestricted donations from the donors
  *
- * @authors Jack Bates
+ * @authors Jack Bates, AJ Thut
  * @date_created
  * @date_modified
  */
@@ -80,12 +80,13 @@ public class DonateActivity extends AppCompatActivity {
                 //send the user back to the donor's main activity and thank them
                 startActivity(new Intent(DonateActivity.this, DonorActivity.class));
                 Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
-
+                //get refrence in database for the donor
                 FirebaseUser user = mAuth.getCurrentUser();
                 vol = FirebaseDatabase.getInstance().getReference("DonorDetails").child(user.getDisplayName().replace("Donor:", "")).child("donated");
                 vol.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //add donated funds to stats for the donor
                         int donated = dataSnapshot.getValue(Integer.class);
                         donated += amount;
                         vol.setValue(donated);

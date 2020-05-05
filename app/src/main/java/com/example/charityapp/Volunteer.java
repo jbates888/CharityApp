@@ -1,7 +1,11 @@
 package com.example.charityapp;
 
+/**
+ * Class used for creating volunteer in database
+ * @author AJ Thut
+ */
 public class Volunteer {
-
+    //volunteer data
     private String name;
     private int hours;
 

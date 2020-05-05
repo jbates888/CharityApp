@@ -1,7 +1,13 @@
 package com.example.charityapp;
 
+/**
+ * Class creates a donor object that can be added to database when a new donor is created
+ *
+ * @author AJ Thut
+ */
 public class Donor {
 
+    //stats for the donor
     private String name;
     private int hours;
     private int donated;

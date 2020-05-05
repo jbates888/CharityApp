@@ -37,7 +37,7 @@ import java.util.Date;
 /**
  * @description
  *
- * @authors  and Felix Estrella
+ * @authors AJ Thut, Jack Bates and Felix Estrella
  * @date_created
  * @date_modified
  */
@@ -73,6 +73,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
     protected void onStart() {
         super.onStart();
 
+        //creating/setting all data for listing the evetns for user
         FirebaseRecyclerAdapter<Event, recycleAdapter> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Event, recycleAdapter>(Event.class, R.layout.row, recycleAdapter.class, ref){
                     protected void populateViewHolder(recycleAdapter holder, Event event, int i){
@@ -80,6 +81,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
+                            //passing all of event information to the event details page if user decides to view the event
                             public void onClick(View v) {
                                 Intent intent = new Intent(VolunteerActivty.this, VolunteerEventDetails.class);
                                 intent.putExtra("Name", event.getName());
@@ -114,42 +116,23 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                             if(event.getName().equals(s.getKey())){
                                                 //do nothing
                                             } else {
-                                                Log.d("volunteeractivity", "Event name" + s.getKey());
-
-                                                //two_events[0] = 1;
-                                                Log.d("volunteeractivity", "Date after test" + two_events[0]);
                                                 String month = s.child("date").getValue(String.class);
                                                 String[] compareevent = month.split("\\/");
-                                                //Log.d("split the date", comapareevent[2]);
                                                 String[] eventdetails = event.getDate().split("\\/");
-//                                                //String ddate = date.substring(0, 2);
-//                                                if (month.charAt(2) == '/') {
-//                                                    month = month.substring(0, 2);
-//                                                } else {
-//                                                    month = month.substring(0, 3);
-//                                                }
-//                                                //Log.d("volunteeractivity", "Date after test" + date);
-//                                                String eventmonth = event.getDate();
-//                                                if (eventmonth.charAt(2) == '/') {
-//                                                    eventmonth = eventmonth.substring(0, 2);
-//                                                } else {
-//                                                    eventmonth = eventmonth.substring(0, 3);
-//                                                }
-////                                                Log.d("volunteeractivity", "Event date " + eventdate);
-////                                                Log.d("volunteeractivity", "Date date " + date);
-
+                                                //checking if event overlaps with other events, checks year, then month, day, then time
                                                 if(eventdetails[2].equals(compareevent[2])){
                                                     if(eventdetails[0].equals(compareevent[0])){
                                                         if(eventdetails[1].equals(compareevent[1])){
                                                             String vols = s.child("volunteers").getValue(String.class);
+                                                            //check if times overlap if volunteer is signed up for another event
                                                             if(vols.contains(temp)){
                                                                 String[] comparetimes = s.child("time").getValue(String.class).split("-");
-                                                                Log.d("times", comparetimes[0]);
                                                                 String[] times = event.getTime().split("-");
                                                                 Date start1 = null;
                                                                 Date start2 = null;
                                                                 Date end1 = null;
                                                                 Date end2 = null;
+                                                                //get time for event into format for date object
                                                                 for(int i = 0; i < comparetimes.length; i++){
                                                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -163,7 +146,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                                                     if(i == 0) start1 = date;
                                                                     if(i == 1) end1 = date;
                                                                 }
-
+                                                                //get time for other event into format for data object
                                                                 for(int i = 0; i < times.length; i++){
                                                                     SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
                                                                     SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
@@ -177,20 +160,14 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                                                     if(i == 0) start2 = date;
                                                                     if(i == 1) end2 = date;
                                                                 }
+                                                                //check if the times overlap
                                                                 if((null == end2 || start1.before(end2)) && (null == end1 || start2.before(end1))){
                                                                     two_events[0] = 1;
                                                                 }
                                                             }
-//                                                            two_events[0] = 1;
                                                         }
                                                     }
-//                                                    String day = s.child("date").getValue(String.class);
-//                                                    String eventday = event.getDate();
-//                                                    if (day.charAt(2) == '/') {
-//                                                        day = day.substring(0, 2);
-//                                                    } else {
-//                                                        month = month.substring(0, 3);
-//                                                    }
+
                                                 }
 
                                             }
@@ -238,8 +215,17 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
         return true;
     }
 
+    /**
+     * Display correct message to user if they want to sign up for an event
+     * @param equals
+     * @param count
+     * @param event
+     * @param temp
+     * @param user
+     */
     private void displayMessages(int equals, int count, Event event, String temp, FirebaseUser user){
         if(count <= 1){
+            //if user is already signed up for event at the same time
             if (equals == 1) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                 builder.setCancelable(true);
@@ -253,7 +239,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                     }
                 });
                 builder.show();
-                //System.out.println(two_events[0]);
+                //if we don't need anymore volunteers for an event
             } else if (event.getVolunteersNeeded() <= 0 && !event.getVolunteers().contains(temp)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                 builder.setCancelable(true);
@@ -267,6 +253,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                     }
                 });
                 builder.show();
+                //if user doesn't want to volunteer for event they are signed up for
             } else if (event.getVolunteers().contains(temp)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(VolunteerActivty.this);
                 builder.setCancelable(true);
@@ -288,6 +275,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                         eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //remove the volunteer for the list of volunteers
                                 for (DataSnapshot eventshot : dataSnapshot.getChildren()) {
                                     String original = event.getVolunteers();
                                     String newVolList;
@@ -300,8 +288,9 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                     }
 
                                     ref.child(eventshot.getKey()).child("volunteers").setValue(newVolList);
-                                    //get the number of volunteers and add one
+                                    //get the number of volunteers and subtract one
                                     int val = event.getNumVolunteers() - 1;
+                                    //setting values back to database
                                     ref.child(eventshot.getKey()).child("volunteersNeeded").setValue(event.getVolunteersNeeded() + 1);
                                     ref.child(eventshot.getKey()).child("numVolunteers").setValue(val);
                                 }
@@ -313,10 +302,11 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                             }
                         });
                         Toast.makeText(getApplicationContext(), "Removed from volunteer list", Toast.LENGTH_LONG).show();
-
+                        //get reference to volunteer in the database
                         vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName().replace("Volunteer:", "")).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
+                            //comparing times is the same as time checking for events above
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 int hours = dataSnapshot.getValue(Integer.class);
                                 String[] comparetimes = event.getTime().split("-");
@@ -343,10 +333,12 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                 long end = end1.getTime();
                                 long result = end - start;
                                 result = result / 3600000;
+                                //subtract the length of the event from the hours volunteered for user
                                 hours  -= result;
                                 if(hours < 0){
                                     hours = 0;
                                 }
+                                //set that value to database
                                 vol.setValue(hours);
 
 
@@ -401,10 +393,11 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                         });
 
                         Toast.makeText(getApplicationContext(), "Signed Up", Toast.LENGTH_LONG).show();
-
+                        //get reference to volunteer in the database
                         vol = FirebaseDatabase.getInstance().getReference("VolHours").child(user.getDisplayName().replace("Volunteer:", "")).child("hours");
                         vol.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
+                            //time checking is same as time checking for events above
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 int hours = dataSnapshot.getValue(Integer.class);
                                 String[] comparetimes = event.getTime().split("-");
@@ -431,6 +424,7 @@ public class VolunteerActivty extends AppCompatActivity implements Serializable 
                                 long end = end1.getTime();
                                 long result = end - start;
                                 result = result / 3600000;
+                                //get the length of event in hours, add those hours to hours volunteered for the user
                                 hours  += result;
                                 if(hours < 0){
                                     hours = 0;

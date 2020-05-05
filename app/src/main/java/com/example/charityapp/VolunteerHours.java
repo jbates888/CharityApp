@@ -27,8 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Class gets all data needed for donor recycle viewer when showing all donors
+ */
 public class VolunteerHours extends AppCompatActivity {
-
+    //viewer, database references
     RecyclerView recyclerView;
     DatabaseReference ref;
     FirebaseDatabase database;
@@ -39,7 +42,7 @@ public class VolunteerHours extends AppCompatActivity {
         setContentView(R.layout.volunteer_hours);
         database = FirebaseDatabase.getInstance();
         ref = FirebaseDatabase.getInstance().getReference("VolHours");
-
+        //create the viewer
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,6 +53,7 @@ public class VolunteerHours extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //gets all data needed to create/fill the viewer
         FirebaseRecyclerAdapter<Volunteer, VolunteerAdapter> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Volunteer, VolunteerAdapter>(Volunteer.class, R.layout.volrow, VolunteerAdapter.class, ref){
                     protected void populateViewHolder(VolunteerAdapter holder, Volunteer v, int i){

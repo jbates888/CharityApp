@@ -34,7 +34,7 @@ import java.util.Date;
 /**
  * @description activity where admin creates a new event
  *
- * @authors Jack Bates and Felix Estrella
+ * @authors Jack Bates, Felix Estrella, AJ Thut
  * @date_created
  * @date_modified
  */
@@ -86,9 +86,10 @@ public class MakeEventActivity extends AppCompatActivity {
 
         mRefrence = FirebaseDatabase.getInstance().getReference("Events");
         dataRefrence = FirebaseDatabase.getInstance().getReference("Data");
-
+        //setting time for the event
         TimeStart.setOnClickListener(new View.OnClickListener() {
             Calendar cal = Calendar.getInstance();
+            //get hours/min for the event start/end
             int hour = cal.get(Calendar.HOUR);
             int minute = cal.get(Calendar.MINUTE);
             @Override
@@ -99,6 +100,7 @@ public class MakeEventActivity extends AppCompatActivity {
                         String m;
                         String minString;
                         int tempHours = hourOfDay;
+                        //get the hour of day for event
                         if (hourOfDay == 0) {
                             hourOfDay += 12;
                             m = "AM";
@@ -118,6 +120,7 @@ public class MakeEventActivity extends AppCompatActivity {
                         } else{
                             minString = "" + minute;
                         }
+                        //set the time for event
                         startTime = hourOfDay + ":" + minString + m;
                         timeView.setText(startTime + " - " + EndTime);
                         startAmOrPm = m;
@@ -128,7 +131,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-
+        //same as code above but for end time for event
         TimeEnd.setOnClickListener(new View.OnClickListener() {
             Calendar cal = Calendar.getInstance();
             int hour = cal.get(Calendar.HOUR);
@@ -170,7 +173,7 @@ public class MakeEventActivity extends AppCompatActivity {
             }
         });
 
-
+        //get the date for the event from date object
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,7 +181,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
-
+                //show the date window to the user
                 DatePickerDialog dialog = new DatePickerDialog(MakeEventActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -198,6 +201,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                //checks that the data is in the future
                 Date currdate = new Date();
                 long diff = currdate.getTime() - exitdate.getTime();
                 if(diff > 86400000){
@@ -207,7 +211,7 @@ public class MakeEventActivity extends AppCompatActivity {
                 }
             }
         };
-
+        //converts times from above to military time
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,7 +241,7 @@ public class MakeEventActivity extends AppCompatActivity {
                         militaryEndTimeDecimal = endHours + 12 + (endMin / 60);
                     }
                 }
-
+                //set all of the data needed for the event into an event object
                 if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
                 } else if (!Name.getText().toString().equals("")
@@ -256,11 +260,12 @@ public class MakeEventActivity extends AppCompatActivity {
                     event.setVolunteers("");
                     event.setVolunteersNeeded(Integer.parseInt(VolsNeeded.getText().toString()));
                     event.setNumVolunteers(0);
-
+                    //create the event in the database
                     mRefrence.child(event.getName()).setValue(event);
                     dataRefrence.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            //change values for organization analytics
                             int value = dataSnapshot.child("numEvents").getValue(Integer.class);
                             dataRefrence.child("numEvents").setValue(value + 1);
                             int value2 = dataSnapshot.child("totNumEvents").getValue(Integer.class);
@@ -284,7 +289,7 @@ public class MakeEventActivity extends AppCompatActivity {
 
             }
         });
-
+        //if user decides to cancel creating the event
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

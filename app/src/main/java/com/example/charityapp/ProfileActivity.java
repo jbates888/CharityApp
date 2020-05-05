@@ -33,9 +33,9 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 
 /**
- * @description
+ * @description User decides what type of user they want to be, also creates their display name
  *
- * @authors
+ * @authors AJ Thut, Jack Bates
  * @date_created
  * @date_modified
  */
@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         types.add("Donor");
         types.add("Volunteer");
         types.add("Admin");
-
+        //create dropdown menu for all of the user types
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(dataAdapter);
@@ -87,35 +87,42 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                     adminPwordTxt.requestFocus();
                     return;
                 }
-
+                //creating the user for the database
                 FirebaseUser user = mAuth.getCurrentUser();
                 if(user != null){
                     UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                             .setDisplayName(type + ": " + userName)
                             .build();
-
+                    //updating information for the user in database
                     user.updateProfile(profile)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(getApplicationContext(), "User information Updated for " + type + ": " + userName, Toast.LENGTH_LONG).show();
                                     Intent intent;
+                                    //start admin main page
                                     if(type.equals("Admin")){
                                         intent = new Intent(ProfileActivity.this, HomeActivity.class);
                                         startActivity(intent);
+                                        //start donor main page
                                     } else if (type.equals("Donor")){
                                         intent = new Intent(ProfileActivity.this, DonorActivity.class);
+                                        //creating donor object, setting all information
                                         Donor d = new Donor();
                                         d.setName(user.getDisplayName().replace("Donor:", ""));
                                         d.setHours(0);
                                         d.setDonated(0);
+                                        //creating reference to donor in database
                                         dRefrence.child(d.getName()).setValue(d);
                                         startActivity(intent);
+                                        //start volunteer main page
                                     } else if (type.equals("Volunteer")){
                                         intent = new Intent(ProfileActivity.this, VolunteerActivty.class);
+                                        //creating volunteer object, setting all information
                                         Volunteer v = new Volunteer();
                                         v.setName(user.getDisplayName().replace("Volunteer:", ""));
                                         v.setHours(0);
+                                        //creating reference to volunteer in database
                                         mRefrence.child(v.getName()).setValue(v);
                                         startActivity(intent);
                                     }
@@ -135,6 +142,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    /**
+     * Set username of the user
+     */
     private void loadInfo() {
         FirebaseUser user = mAuth.getCurrentUser();
         String userName = user.getDisplayName();
@@ -155,6 +165,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     }
 
     @Override
+    /**
+     * Take user back to login page when logging out
+     */
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.ActionLogout:
