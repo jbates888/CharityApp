@@ -23,8 +23,8 @@ import com.google.firebase.database.ValueEventListener;
  * @description class is for unrestricted donations from the donors
  *
  * @authors Jack Bates, AJ Thut
- * @date_created
- * @date_modified
+ * @date_created 3/27/20
+ * @date_modified 3/29/20
  */
 public class DonateActivity extends AppCompatActivity {
     //declare buttons and text views

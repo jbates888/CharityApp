@@ -12,8 +12,8 @@ import static java.lang.Thread.sleep;
  * @description class for the splash screen when the app opens
  *
  * @authors Travis Agarano
- * @date_created 02/15/20
- * @date_modified 04/13/20
+ * @date_created
+ * @date_modified
  */
 public class splash_screen extends AppCompatActivity {
     

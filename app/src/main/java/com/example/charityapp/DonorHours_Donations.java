@@ -15,8 +15,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * Class gets all data needed for the recycleviewer for listing all donors to admin
- * @author AJ Thut
+ * @description Class gets all data needed for the recycleviewer for listing all donors to admin
+ *
+ * @authors AJ Thut
+ * @date_created 3/2/20
+ * @date_modified 3/7/20
  */
 public class DonorHours_Donations extends AppCompatActivity{
 

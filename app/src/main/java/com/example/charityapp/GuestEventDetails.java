@@ -9,8 +9,8 @@ import android.widget.TextView;
  * @description activity where guest user are are sent to view an events details
  *
  * @authors Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 2/24/20
+ * @date_modified 2/29/20
  */
 public class GuestEventDetails extends AppCompatActivity {
 

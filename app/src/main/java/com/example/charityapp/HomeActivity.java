@@ -31,8 +31,8 @@ import com.google.firebase.database.ValueEventListener;
  * @description main activity for admins to view all events
  *
  * @authors Jack Bates, AJ Thut
- * @date_created
- * @date_modified
+ * @date_created 2/5/20
+ * @date_modified 2/28/20
  */
 public class HomeActivity extends AppCompatActivity  {
 

@@ -14,11 +14,13 @@ public class Volunteer {
 
     public Volunteer(){}
 
+    //volunteer constructor
     public Volunteer(String name, int hours){
         this.name = name;
         this.hours = hours;
     }
 
+    //Volunteer getters and setters
     public void setName(String name){
         this.name = name;
     }

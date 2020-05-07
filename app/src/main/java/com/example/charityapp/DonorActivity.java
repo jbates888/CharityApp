@@ -37,8 +37,8 @@ import java.util.Date;
  * @description main screen for donors where they can view all the events
  *
  * @authors Jack Bates, AJ Thut
- * @date_created
- * @date_modified
+ * @date_created 2/15/20
+ * @date_modified 5/4/20
  */
 public class DonorActivity extends AppCompatActivity {
 

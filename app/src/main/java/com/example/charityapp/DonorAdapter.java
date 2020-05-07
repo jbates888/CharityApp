@@ -5,8 +5,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 /**
- * Adds data for the layout when admin views all of the donors in the system
+ * @description Adds data for the layout when admin views all of the donors in the system
+ *
+ * @authors AJ Thut
+ * @date_created 5/4/20
+ * @date_modified 5/4/20
  */
 
 public class DonorAdapter extends RecyclerView.ViewHolder{
