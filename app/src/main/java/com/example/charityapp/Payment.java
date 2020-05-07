@@ -15,11 +15,12 @@ import android.widget.Toast;
  * FAILED ATTEMPT
  *
  * @authors Travis Agarano
- * @date_created
- * @date_modified
+ * @date_created 3/2/20 
+ * @date_modified 4/22/20
  */
 public class Payment extends AppCompatActivity {
-    //this class is not currently used
+    // this class is not currently used
+    // Globals
     private EditText nameInput, cityInput, stateInput, numberInput, CVVInput;
     private String name, city, state, number, CVV;
     Button donate_btn;
@@ -29,6 +30,7 @@ public class Payment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        // variables to set as input text box info  
         nameInput = (EditText) findViewById(R.id.card_name);
         numberInput = (EditText) findViewById(R.id.card_number);
         CVVInput = (EditText) findViewById(R.id.card_CVV);
@@ -48,16 +50,29 @@ public class Payment extends AppCompatActivity {
                 CVV = CVVInput.getText().toString();
                 city = nameInput.getText().toString();
                 state = nameInput.getText().toString();
-
+                
+                // Name is alphabetical and a valid name
                 if (isAlpha(name) == true && name.length() >= 3) {
+                    
+                    // card number is long enough and numbers only
                     if (TextUtils.isDigitsOnly(number) && (number.length() == 15 || number.length() == 16)) {
+                        
+                        // CVV number is only numbers and correct length
                         if(TextUtils.isDigitsOnly(CVV) && (CVV.length() == 3 || CVV.length() == 4)) {
+                            
+                            // city is alphabetical
                             if (isAlpha(city) == true) {
+                                
+                                // state is alphabetical
                                 if (isAlpha(state) == true) {
+                                    // finish activity
                                     finish();
                                     //startActivity(new Intent(Payment.this, DonorEventDetails.class));
+                                    // back to donor page
                                     back();
                                     Toast.makeText(getApplicationContext(), "Thank you for donating!", Toast.LENGTH_LONG).show();
+                                    
+                                  // Errors in input
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Enter a valid state.", Toast.LENGTH_LONG).show();
                                 }
