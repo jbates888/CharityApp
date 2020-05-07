@@ -15,8 +15,8 @@ import android.widget.Toast;
  * FAILED ATTEMPT
  *
  * @authors Travis Agarano
- * @date_created
- * @date_modified
+ * @date_created 03/15/20
+ * @date_modified 05/01/20
  */
 public class Payment extends AppCompatActivity {
     //this class is not currently used
