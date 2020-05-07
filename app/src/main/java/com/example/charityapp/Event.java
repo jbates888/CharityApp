@@ -4,8 +4,8 @@ package com.example.charityapp;
  * @description this class is for creating event objects
  *
  * @authors Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 2/18/20
+ * @date_modified 2/29/20
  */
 
 public class Event {

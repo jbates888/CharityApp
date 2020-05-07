@@ -30,9 +30,9 @@ import java.util.Date;
 /**
  * @description activity for admin to edit a event
  *
- * @authors Jack Bates and Felix Estrella
- * @date_created
- * @date_modified
+ * @authors Jack Bates, Felix Estrella
+ * @date_created 3/2/20
+ * @date_modified 3/15/20
  */
 public class EditEventActivity extends AppCompatActivity {
 
@@ -246,6 +246,7 @@ public class EditEventActivity extends AppCompatActivity {
                 endHours = 0;
                 endMin = 0;
                 timeHolder = "";
+                //used to apply am or pm to the time
                 for(int i = 0; i < EndTime.length(); i++) {
                     if (EndTime.charAt(i) != ':' && EndTime.charAt(i) != 'P' && EndTime.charAt(i) != 'A' && EndTime.charAt(i) != ' ') {
                         timeHolder = timeHolder + EndTime.charAt(i);
@@ -274,7 +275,7 @@ public class EditEventActivity extends AppCompatActivity {
                     }
 
                 }
-
+                //check to make sure the end time is after the start time
                 if (militaryEndTimeDecimal - militaryStartTimeDecimal <= 0) {
                     Toast.makeText(getApplicationContext(), "Please make sure the time for start and end are possible", Toast.LENGTH_LONG).show();
                 } else if (!Program.getText().toString().equals("")

@@ -1,9 +1,11 @@
 package com.example.charityapp;
 
 /**
- * Class creates a donor object that can be added to database when a new donor is created
+ * @description Class creates a donor object that can be added to database when a new donor is created
  *
- * @author AJ Thut
+ * @authors Aj Thut
+ * @date_created 2/17/20
+ * @date_modified 3/26/20
  */
 public class Donor {
 
@@ -14,12 +16,14 @@ public class Donor {
 
     public Donor(){}
 
+    //donor constructor
     public Donor(String name, int hours, int donate){
         this.name = name;
         this.hours = hours;
         this.donated = donate;
     }
 
+    //donor getters and setters
     public void setName(String name){
         this.name = name;
     }

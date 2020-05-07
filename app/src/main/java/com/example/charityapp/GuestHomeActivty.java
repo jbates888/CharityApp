@@ -23,8 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
  * @description where guest users are sent after logging in to view all the events
  *
  * @authors Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 2/8/20
+ * @date_modified 2/28/20
  */
 
 public class GuestHomeActivty extends AppCompatActivity {

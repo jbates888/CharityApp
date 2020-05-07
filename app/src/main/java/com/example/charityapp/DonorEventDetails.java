@@ -33,8 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @description Donor can view all event details and donate to the event
  *
  * @authors AJ Thut, Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 2/29/20
+ * @date_modified 3/7/20
  */
 public class DonorEventDetails extends AppCompatActivity {
 

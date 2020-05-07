@@ -30,8 +30,8 @@ import java.util.List;
  * @description where admin users are sent after logging in to view all the events
  *
  * @authors Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 3/1/20
+ * @date_modified 3/28/20
  */
 public class AdminEventDetails extends AppCompatActivity {
 
@@ -89,57 +89,6 @@ public class AdminEventDetails extends AppCompatActivity {
                 String[] names = extras.getString("Volunteers").replaceAll(" ", "").split(", ");
                 List<String> people = Arrays.asList(names);
 
-                //vol = FirebaseDatabase.getInstance().getReference("VolHours");
-//                for(String f : people){
-//                    Log.d("Person", f);
-//                    vol = FirebaseDatabase.getInstance().getReference("VolHours");
-//                    vol.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            if(dataSnapshot.hasChild(f)){
-//                                int hours = dataSnapshot.child(f).child("hours").getValue(Integer.class);
-//                                String[] comparetimes = extras.getString("Time").split("-");
-//                                Log.d("times", comparetimes[0]);
-//                                //String[] times = event.getTime().split("-");
-//                                Date start1 = null;
-//                                Date end1 = null;
-//
-//                                for(int i = 0; i < comparetimes.length; i++){
-//                                    SimpleDateFormat mformat = new SimpleDateFormat("HH:mm");
-//                                    SimpleDateFormat oldformat = new SimpleDateFormat("hh:mma");
-//                                    Date date = null;
-//                                    try {
-//                                        date = oldformat.parse(comparetimes[i]);
-//                                    } catch (ParseException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                    comparetimes[i] = mformat.format(date);
-//                                    if(i == 0) start1 = date;
-//                                    if(i == 1) end1 = date;
-//                                }
-//
-//                                long start = start1.getTime();
-//                                long end = end1.getTime();
-//                                long result = end - start;
-//                                result = result / 3600000;
-//                                hours  -= result;
-//                                if(hours < 0){
-//                                    hours = 0;
-//                                }
-//                                vol = FirebaseDatabase.getInstance().getReference("VolHours").child(f).child("hours");
-//                                vol.setValue(hours);
-//
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                    vol = null;
-//                }
 
                 Query eventquery = ref.orderByChild("name").equalTo(eventname);
                 eventquery.addListenerForSingleValueEvent(new ValueEventListener() {
