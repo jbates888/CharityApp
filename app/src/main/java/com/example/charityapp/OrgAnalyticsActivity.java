@@ -18,8 +18,8 @@ import org.w3c.dom.Text;
  * @description activity where admins can view the data for the whole charity
  *
  * @authors Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 03/16/20
+ * @date_modified 05/03/20
  */
 public class OrgAnalyticsActivity extends AppCompatActivity {
 

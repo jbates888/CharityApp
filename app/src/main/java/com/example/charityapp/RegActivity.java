@@ -27,8 +27,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
  * @description
  *
  * @authors AJ Thut, Jack Bates, Felix Estrella
- * @date_created
- * @date_modified
+ * @date_created 02/12/20
+ * @date_modified 04/30/20
  */
 public class RegActivity extends AppCompatActivity implements View.OnClickListener {
 

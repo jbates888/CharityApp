@@ -1,8 +1,11 @@
 package com.example.charityapp;
 
 /**
- * Class used for creating volunteer in database
+ * @description Class used for creating volunteer in database
+ *
  * @author AJ Thut
+ * @date_created 02/13/20
+ * @date_modified 05/01/20
  */
 public class Volunteer {
     //volunteer data

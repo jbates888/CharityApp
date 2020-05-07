@@ -28,7 +28,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Class gets all data needed for donor recycle viewer when showing all donors
+ * @description Class gets all data needed for donor recycle viewer when showing all donors
+ *
+ * @author Jack Bates and AJ Thut
+ * @date_created 04/12/20
+ * @date_modified 05/01/20
+ *
  */
 public class VolunteerHours extends AppCompatActivity {
     //viewer, database references

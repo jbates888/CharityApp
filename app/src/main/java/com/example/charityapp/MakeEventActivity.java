@@ -35,8 +35,8 @@ import java.util.Date;
  * @description activity where admin creates a new event
  *
  * @authors Jack Bates, Felix Estrella, AJ Thut
- * @date_created
- * @date_modified
+ * @date_created 02/12/20
+ * @date_modified 05/03/20
  */
 public class MakeEventActivity extends AppCompatActivity {
 

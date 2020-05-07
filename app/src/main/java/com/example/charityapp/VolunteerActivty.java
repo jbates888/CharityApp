@@ -35,11 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @description
+ * @description Activity where the volunteers can choose to sign up and log out.
  *
  * @authors AJ Thut, Jack Bates and Felix Estrella
- * @date_created
- * @date_modified
+ * @date_created 02/13/20
+ * @date_modified 05/01/20
  */
 @SuppressWarnings("serial")
 public class VolunteerActivty extends AppCompatActivity implements Serializable {

@@ -36,8 +36,8 @@ import java.util.ArrayList;
  * @description User decides what type of user they want to be, also creates their display name
  *
  * @authors AJ Thut, Jack Bates
- * @date_created
- * @date_modified
+ * @date_created 02/17/20
+ * @date_modified 04/30/20
  */
 public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText userNameTxt, adminPwordTxt;

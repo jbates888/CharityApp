@@ -9,8 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Class that sets all data for volunteer recycle adapter
+ * @description Class that sets all data for volunteer recycle adapter
+ *
  * @author AJ Thut
+ * @date_created 02/14/20
+ * @date_modified 05/01/20
  */
 public class VolunteerAdapter extends RecyclerView.ViewHolder{
     View view;

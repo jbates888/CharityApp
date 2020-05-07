@@ -31,8 +31,8 @@ import java.util.Date;
  * @description Displays event details to user, also allows them to sign up for event
  *
  * @authors AJ Thut, Jack Bates, Felix Estrella
- * @date_created
- * @date_modified
+ * @date_created 02/14/20
+ * @date_modified 05/01/20
  */
 public class VolunteerEventDetails extends AppCompatActivity {
 

@@ -27,8 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
  * @description main activity where app starts, the log in page for users
  *
  * @authors Jack Bates, Felix Estrella, AJ Thut
- * @date_created
- * @date_modified
+ * @date_created 02/05/20
+ * @date_modified 04/30/20
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -15,7 +15,6 @@
         <activity android:name=".EditEventActivity" />
         <activity android:name=".DonateActivity" />
         <activity android:name=".OrgAnalyticsActivity" />
-        <activity android:name=".Payment" />
         <activity android:name=".GuestEventDetails" />
         <activity android:name=".VolunteerEventDetails" />
         <activity android:name=".DonorEventDetails" />
