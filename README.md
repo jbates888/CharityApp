@@ -19,10 +19,10 @@ This app uses Google Firebase authentication for user login credentials and Fire
 * 4 user roles: Admin, Guest, Volunteer, Donor
 * Login and sign up screen for new users
 * Real time updates with Firestore
-* Adimns can create and edit events
+* Admins can create and edit events
 * Volunteers can sign up to attend an event
-* Donors and contribute to the event or orginization
-* Guests can view event with out having to sign up
+* Donors can contribute to the event or orginization
+* Guests can view event without having to sign up
 
 ## ⚔️ Installation
 
