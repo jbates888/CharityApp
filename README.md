@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://www.dropbox.com/h?preview=Screenshot_20200811-134805.png" alt="ss">
+    ![Screenshot_20200811-134752](https://user-images.githubusercontent.com/41972596/89937930-5f374580-dbdb-11ea-8f55-0cec646e0044.png)
 </p>
 
 <p align="center">
@@ -9,7 +9,6 @@ Fully functioning Andriod application built with Java using Andriod Studio
 
 This app uses Google Firebase authentication for user login credentials and Firebase Firestore as the data base to hold event information.
 
-<a href="./CHANGELOG.md">📖 Release Notes</a>
 
 ## ✨ Features
 
