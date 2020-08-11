@@ -1,10 +1,8 @@
-<p align="center">
-    ![image](https://user-images.githubusercontent.com/41972596/89937930-5f374580-dbdb-11ea-8f55-0cec646e0044.png)
-</p>
 
-![image](https://cloud.githubusercontent.com/assets/9053854/24495974/fbf2e0cc-1547-11e7-846c-25b5fac7f6b1.png)
-![image](https://user-images.githubusercontent.com/41972596/89937930-5f374580-dbdb-11ea-8f55-0cec646e0044.png)
 
+<image src="https://user-images.githubusercontent.com/41972596/89938268-df5dab00-dbdb-11ea-8d48-b7cc1a64ee8a.png" width="300"> <image src="https://user-images.githubusercontent.com/41972596/89937930-5f374580-dbdb-11ea-8f55-0cec646e0044.png" width="300">
+    
+    
 <p align="center">
 Fully functioning Andriod application built with Java using Andriod Studio
 <br>
